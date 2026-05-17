@@ -84,24 +84,20 @@ records.forEach(rec => {
   });
 });
 
-// ── Lazy-play timeline videos (mobile performance) ──────────────────
+// ── Pause off-screen timeline videos to save mobile bandwidth ───────
 (function () {
+  if (!('IntersectionObserver' in window)) return;
   const timelineVideos = document.querySelectorAll('.tl-photo video');
-  if (!('IntersectionObserver' in window)) {
-    timelineVideos.forEach(v => { v.preload = 'metadata'; v.load(); v.play().catch(() => {}); });
-    return;
-  }
   const io = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       const v = entry.target;
       if (entry.isIntersecting) {
-        if (v.preload === 'none') { v.preload = 'auto'; v.load(); }
         v.play().catch(() => {});
       } else {
         v.pause();
       }
     });
-  }, { rootMargin: '200px 0px', threshold: 0.1 });
+  }, { rootMargin: '300px 0px', threshold: 0 });
   timelineVideos.forEach(v => io.observe(v));
 })();
 
