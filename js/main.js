@@ -84,6 +84,27 @@ records.forEach(rec => {
   });
 });
 
+// ── Lazy-play timeline videos (mobile performance) ──────────────────
+(function () {
+  const timelineVideos = document.querySelectorAll('.tl-photo video');
+  if (!('IntersectionObserver' in window)) {
+    timelineVideos.forEach(v => { v.preload = 'metadata'; v.load(); v.play().catch(() => {}); });
+    return;
+  }
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const v = entry.target;
+      if (entry.isIntersecting) {
+        if (v.preload === 'none') { v.preload = 'auto'; v.load(); }
+        v.play().catch(() => {});
+      } else {
+        v.pause();
+      }
+    });
+  }, { rootMargin: '200px 0px', threshold: 0.1 });
+  timelineVideos.forEach(v => io.observe(v));
+})();
+
 // ── Flashing Lights karaoke surprise at 0:42 ────────────────────────
 (function () {
   const flashingRec = document.querySelector('.record[data-record="3"]');
@@ -107,6 +128,8 @@ records.forEach(rec => {
       document.getElementById('flashing-set').scrollIntoView({ behavior: 'smooth', block: 'center' });
       overlay.classList.add('visible');
       document.getElementById('flashing-set').classList.add('karaoke-on');
+      karaokeVideo.preload = 'auto';
+      karaokeVideo.load();
       setTimeout(() => {
         flashingAudio.pause();
         flashingRec.classList.add('paused');
