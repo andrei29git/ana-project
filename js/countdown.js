@@ -2,7 +2,7 @@
 
 (function () {
   // Date shown to Ana (the decoy)
-  const SHOWN_DATE = new Date('2026-05-29T01:00:00');
+  const SHOWN_DATE = new Date('2026-05-28T01:00:00');
   // Real date (revealed by easter egg)
   const REAL_DATE  = new Date('2026-05-28T01:00:00');
 
