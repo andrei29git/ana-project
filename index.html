@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>for Ana</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Outfit:wght@300;400;500&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <canvas id="petal-canvas"></canvas>
+  <div id="grain"></div>
+  <div id="sparkle-container"></div>
+
+  <!-- ════════ HERO ════════ -->
+  <section id="hero" class="hero">
+    <div class="hero-frame">
+      <p class="hero-eyebrow">a website by david</p>
+
+      <div class="hero-center">
+        <span class="hero-for">for</span>
+        <h1 class="hero-name"><span class="typed-text" id="typed-text"></span><span class="cursor-blink">|</span></h1>
+      </div>
+
+      <div class="countdown-block">
+        <p class="countdown-label">I'll be holding you again in</p>
+        <div class="countdown-units" id="countdown">
+          <div class="flip-unit">
+            <div class="flip-card"><span class="flip-val" id="days-val">00</span></div>
+            <span class="flip-label">days</span>
+          </div>
+          <span class="flip-sep">·</span>
+          <div class="flip-unit">
+            <div class="flip-card"><span class="flip-val" id="hours-val">00</span></div>
+            <span class="flip-label">hours</span>
+          </div>
+          <span class="flip-sep">·</span>
+          <div class="flip-unit">
+            <div class="flip-card"><span class="flip-val" id="mins-val">00</span></div>
+            <span class="flip-label">minutes</span>
+          </div>
+          <span class="flip-sep">·</span>
+          <div class="flip-unit">
+            <div class="flip-card"><span class="flip-val" id="secs-val">00</span></div>
+            <span class="flip-label">seconds</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="scroll-cue">
+        <span>turn the page</span>
+        <span class="scroll-line"></span>
+      </div>
+    </div>
+
+    <!-- decorative sparkles. the .secret-star is easter egg #1 -->
+    <span class="deco-sparkle" style="top:16%;left:11%">✦</span>
+    <span class="deco-sparkle" style="top:74%;left:9%">✦</span>
+    <span class="deco-sparkle" style="top:26%;right:13%">✦</span>
+    <span class="deco-sparkle secret-star" id="secret-star" style="top:69%;right:11%">✦</span>
+  </section>
+
+  <!-- ════════ I · THE LETTER ════════ -->
+  <section id="letter" class="chapter letter-section">
+    <div class="chapter-mark"><span class="chapter-num">I</span><span class="chapter-name">the letter</span></div>
+
+    <div class="letter-container">
+      <div class="wax-seal" id="wax-seal">
+        <div class="seal-wax">
+          <span class="seal-emblem">
+            <span class="seal-glyph">D<i>♥</i>A</span>
+          </span>
+        </div>
+      </div>
+      <article class="letter-paper">
+        <h2 class="letter-salutation">Dear Ana,</h2>
+        <div class="letter-body">
+          <p><span class="dropcap">I</span> know how unbearable the wait gets. The days between seeing each other don't really get shorter, they just get more worth it. And I wanted you to see that, properly.</p>
+          <p>So I built this. A timeline of us: every moment I could put a date to, every night that mattered, every time we made the distance feel smaller than it was. Scroll through it and see how much has already happened. How much we've already made happen.</p>
+          <p>It's a lot, Ana. It's really a lot.</p>
+          <p class="letter-sign">All of it, always,<br><em class="letter-name">David</em></p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ════════ II · OUR STORY ════════ -->
+  <section id="timeline" class="chapter timeline-section">
+    <div class="chapter-mark"><span class="chapter-num">II</span><span class="chapter-name">our story</span></div>
+    <h2 class="section-heading">ten months, more or less</h2>
+
+    <div class="timeline" id="timeline-track">
+      <div class="tl-thread">
+      <div class="tl-spine"><div class="tl-spine-fill" id="tl-spine-fill"></div></div>
+
+      <div class="tl-season"><span>summer &nbsp;·&nbsp; 2025</span></div>
+
+      <div class="tl-item tl-left">
+        <div class="tl-node"></div>
+        <div class="tl-card">
+          <span class="tl-date">July 12, 2025</span>
+          <h3 class="tl-title">an unlikely night</h3>
+          <div class="tl-photo tl-photo--tall">
+            <video autoplay loop muted playsinline preload="metadata" style="object-position: top;">
+              <source src="images/july-12-unlikely-night.mp4" type="video/mp4">
+            </video>
+          </div>
+          <!-- DAVID: tell the story of how you met here -->
+          <p class="tl-desc">Walked the streets of Bucharest to 6 a.m. The kind of night you don't plan for.</p>
+        </div>
+      </div>
+
+      <div class="tl-item tl-left">
+        <div class="tl-node"></div>
+        <div class="tl-card">
+          <span class="tl-date">July 14, 2025</span>
+          <h3 class="tl-title">our first date</h3>
+          <div class="tl-photo"><img src="images/july-14-first-date.jpg" alt="our first date"></div>
+          <!-- DAVID: add your description -->
+          <p class="tl-desc">A rather unusual pic of us to remember it by.</p>
+        </div>
+      </div>
+
+      <div class="tl-item tl-right">
+        <div class="tl-node"></div>
+        <div class="tl-card">
+          <span class="tl-date">August 1, 2025</span>
+          <h3 class="tl-title">the day</h3>
+          <div class="tl-photo tl-lovenote">
+            <span class="lovenote-deco" style="top:15%;left:14%">✿</span>
+            <span class="lovenote-deco" style="top:20%;right:16%">✦</span>
+            <span class="lovenote-deco" style="bottom:18%;left:20%">♡</span>
+            <span class="lovenote-deco" style="bottom:14%;right:14%">✦</span>
+            <div class="lovenote-center">
+              <span class="lovenote-script">us</span>
+              <span class="lovenote-heart">♥</span>
+              <span class="lovenote-date">from 1.8.2025 → forever</span>
+            </div>
+          </div>
+          <!-- DAVID: add your description -->
+          <p class="tl-desc">Some things don't need explaining.</p>
+        </div>
+      </div>
+
+      <div class="tl-item tl-left">
+        <div class="tl-node"></div>
+        <div class="tl-card">
+          <span class="tl-date">August 27, 2025</span>
+          <h3 class="tl-title">brașov</h3>
+          <div class="tl-photo tl-photo--tall"><img src="images/brasov-1.jpg" alt="brașov"></div>
+          <div class="tl-photo tl-photo--tall"><img src="images/brasov-2.jpg" alt="brașov"></div>
+          <!-- DAVID: add your description -->
+          <p class="tl-desc">Our second sleepover. And a first time for... something else.</p>
+        </div>
+      </div>
+
+      <div class="tl-item tl-left">
+        <div class="tl-node"></div>
+        <div class="tl-card">
+          <span class="tl-date">August 29, 2025</span>
+          <h3 class="tl-title">happy birthday to me, and I love you</h3>
+          <div class="tl-photo tl-photo--tall">
+            <video autoplay loop muted playsinline preload="metadata">
+              <source src="images/aug-29-birthday.mp4" type="video/mp4">
+            </video>
+          </div>
+          <p class="tl-desc">Best birthday gift: finally saying what I'd been thinking for a while.</p>
+        </div>
+      </div>
+
+      <div class="tl-item tl-right tl-bittersweet">
+        <div class="tl-node"></div>
+        <div class="tl-card">
+          <span class="tl-date">August 30, 2025</span>
+          <h3 class="tl-title">goodbye, for now</h3>
+          <div class="tl-photo rain-scene">
+            <div class="rain-drop" style="left:4%;  animation-duration:0.75s; animation-delay:0s"></div>
+            <div class="rain-drop" style="left:9%;  animation-duration:0.9s;  animation-delay:0.4s"></div>
+            <div class="rain-drop" style="left:15%; animation-duration:0.7s;  animation-delay:0.15s"></div>
+            <div class="rain-drop" style="left:21%; animation-duration:0.85s; animation-delay:0.6s"></div>
+            <div class="rain-drop" style="left:27%; animation-duration:0.78s; animation-delay:0.1s"></div>
+            <div class="rain-drop" style="left:33%; animation-duration:0.92s; animation-delay:0.35s"></div>
+            <div class="rain-drop" style="left:39%; animation-duration:0.68s; animation-delay:0.7s"></div>
+            <div class="rain-drop" style="left:45%; animation-duration:0.82s; animation-delay:0.22s"></div>
+            <div class="rain-drop" style="left:51%; animation-duration:0.74s; animation-delay:0.5s"></div>
+            <div class="rain-drop" style="left:57%; animation-duration:0.88s; animation-delay:0.08s"></div>
+            <div class="rain-drop" style="left:63%; animation-duration:0.72s; animation-delay:0.45s"></div>
+            <div class="rain-drop" style="left:69%; animation-duration:0.96s; animation-delay:0.3s"></div>
+            <div class="rain-drop" style="left:75%; animation-duration:0.76s; animation-delay:0.62s"></div>
+            <div class="rain-drop" style="left:81%; animation-duration:0.84s; animation-delay:0.18s"></div>
+            <div class="rain-drop" style="left:87%; animation-duration:0.7s;  animation-delay:0.55s"></div>
+            <div class="rain-drop" style="left:93%; animation-duration:0.9s;  animation-delay:0.02s"></div>
+            <div class="rain-drop" style="left:12%; animation-duration:0.66s; animation-delay:0.8s"></div>
+            <div class="rain-drop" style="left:48%; animation-duration:0.94s; animation-delay:0.25s"></div>
+            <div class="rain-drop" style="left:72%; animation-duration:0.71s; animation-delay:0.9s"></div>
+            <div class="rain-drop" style="left:30%; animation-duration:0.87s; animation-delay:0.42s"></div>
+            <div class="rain-city">
+              <div class="rain-glow" style="left:14%; bottom:30px; animation-delay:0s"></div>
+              <div class="rain-glow" style="left:24%; bottom:22px; animation-delay:1.2s"></div>
+              <div class="rain-glow" style="left:38%; bottom:38px; animation-delay:0.5s"></div>
+              <div class="rain-glow" style="left:53%; bottom:26px; animation-delay:2s"></div>
+              <div class="rain-glow" style="left:66%; bottom:34px; animation-delay:0.8s"></div>
+              <div class="rain-glow" style="left:79%; bottom:24px; animation-delay:1.6s"></div>
+            </div>
+            <span class="rain-label">30 · 08 · 2025</span>
+          </div>
+          <p class="tl-desc">The Netherlands. The distance started here, and we decided it was worth it.</p>
+        </div>
+      </div>
+
+      <div class="tl-season"><span>autumn &nbsp;·&nbsp; 2025</span></div>
+
+      <div class="tl-item tl-left">
+        <div class="tl-node"></div>
+        <div class="tl-card">
+          <span class="tl-date">September 15 - 23, 2025</span>
+          <h3 class="tl-title">the visit, and "I love you" back</h3>
+          <div class="tl-photo-grid tl-grid-4">
+            <div class="tl-photo"><img src="images/sep-visit-1.jpg" alt="the visit"></div>
+            <div class="tl-photo"><img src="images/sep-visit-2.jpg" alt="the visit"></div>
+            <div class="tl-photo"><img src="images/sep-visit-3.jpg" alt="the visit" style="object-position: center 70%;"></div>
+            <div class="tl-photo"><img src="images/sep-visit-4.jpg" alt="the visit"></div>
+          </div>
+          <p class="tl-desc">You came to the Netherlands. And then you said it. Worth every kilometre.</p>
+        </div>
+      </div>
+
+      <div class="tl-item tl-right">
+        <div class="tl-node"></div>
+        <div class="tl-card">
+          <span class="tl-date">October 17, 2025</span>
+          <h3 class="tl-title">zoo café</h3>
+          <div class="tl-photo tl-photo--tall"><img src="images/oct-17-zoo-cafe.jpg" alt="zoo café"></div>
+          <p class="tl-desc">One of my favourite dates. Something about that place.</p>
+        </div>
+      </div>
+
+      <div class="tl-item tl-left">
+        <div class="tl-node"></div>
+        <div class="tl-card">
+          <span class="tl-date">November 16, 2025</span>
+          <h3 class="tl-title">ceramic café</h3>
+          <div class="tl-photo tl-photo--tall">
+            <video autoplay loop muted playsinline preload="metadata">
+              <source src="images/oct-17-zoo-cafe.mp4" type="video/mp4">
+            </video>
+          </div>
+          <p class="tl-desc">Getting creative, or at least trying to.</p>
+        </div>
+      </div>
+
+      <div class="tl-item tl-right">
+        <div class="tl-node"></div>
+        <div class="tl-card">
+          <span class="tl-date">November 20, 2025</span>
+          <h3 class="tl-title">the cursed bar</h3>
+          <div class="tl-photo tl-photo--tall">
+            <video autoplay loop muted playsinline preload="metadata">
+              <source src="images/nov-20-cursed-bar.mp4" type="video/mp4">
+            </video>
+          </div>
+          <p class="tl-desc">It had its moments, in a certain kind of way.</p>
+        </div>
+      </div>
+
+      <div class="tl-item tl-left">
+        <div class="tl-node"></div>
+        <div class="tl-card">
+          <span class="tl-date">November 23, 2025</span>
+          <h3 class="tl-title">first insta pic, officially us</h3>
+          <div class="tl-photo tl-photo--tall"><img src="images/nov-23.jpg" alt="first insta pic"></div>
+          <p class="tl-desc">THIS photo of us. Posted it. Made it official.</p>
+        </div>
+      </div>
+
+      <div class="tl-season"><span>winter &nbsp;·&nbsp; 2025 / 2026</span></div>
+
+      <div class="tl-item tl-right tl-special">
+        <div class="tl-node"></div>
+        <div class="tl-card">
+          <span class="tl-date">December 10, 2025</span>
+          <h3 class="tl-title">the first surprise</h3>
+          <div class="tl-photo"><img src="images/dec-10.jpg" alt="the first surprise"></div>
+          <p class="tl-desc">You thought I was coming back on the 11th. I came back on the 10th. Some traditions are worth repeating. 🤍</p>
+        </div>
+      </div>
+
+      <div class="tl-item tl-left">
+        <div class="tl-node"></div>
+        <div class="tl-card">
+          <span class="tl-date">December 17, 2025</span>
+          <h3 class="tl-title">christmas market</h3>
+          <div class="tl-photo"><img src="images/dec-17.jpg" alt="christmas market"></div>
+          <p class="tl-desc">The cold kind of beautiful.</p>
+        </div>
+      </div>
+
+      <div class="tl-item tl-right">
+        <div class="tl-node"></div>
+        <div class="tl-card">
+          <span class="tl-date">December 21, 2025</span>
+          <h3 class="tl-title">craiova christmas market</h3>
+          <div class="tl-photo tl-photo--tall"><img src="images/dec-21.jpg" alt="craiova christmas market"></div>
+          <div class="tl-photo tl-photo--tall">
+            <video autoplay loop muted playsinline preload="metadata">
+              <source src="images/dec-21.mp4" type="video/mp4">
+            </video>
+          </div>
+          <p class="tl-desc">A trip within a trip. Bucharest → Craiova → Christmas lights.</p>
+        </div>
+      </div>
+
+      <div class="tl-item tl-left tl-special">
+        <div class="tl-node"></div>
+        <div class="tl-card">
+          <span class="tl-date">December 24, 2025</span>
+          <h3 class="tl-title">christmas eve</h3>
+          <div class="tl-photo tl-photo--fav"><img src="images/dec-24.jpg" alt="christmas eve"></div>
+          <p class="tl-desc">This one goes in a frame someday.</p>
+        </div>
+      </div>
+
+      <div class="tl-item tl-right tl-bittersweet">
+        <div class="tl-node"></div>
+        <div class="tl-card">
+          <span class="tl-date">January 4, 2026</span>
+          <h3 class="tl-title">last day before the Netherlands again</h3>
+          <div class="tl-photo tl-photo--tall"><img src="images/jan-4.jpg" alt="last day"></div>
+          <p class="tl-desc">Goodbyes don't get easier. But you made it beautiful anyway. <em>(not as beautiful as you)</em></p>
+        </div>
+      </div>
+
+      <div class="tl-item tl-left">
+        <div class="tl-node"></div>
+        <div class="tl-card">
+          <span class="tl-date">February 1 – 2, 2026</span>
+          <h3 class="tl-title">six months</h3>
+          <div class="tl-photo tl-photo--tall"><img src="images/feb-1.jpg" alt="six months"></div>
+          <div class="tl-photo tl-photo--tall">
+            <video autoplay loop muted playsinline preload="metadata">
+              <source src="images/feb-1.mp4" type="video/mp4">
+            </video>
+          </div>
+          <p class="tl-desc">Half a year. Already felt like it couldn't have been any other way.</p>
+        </div>
+      </div>
+
+      <div class="tl-item tl-right">
+        <div class="tl-node"></div>
+        <div class="tl-card">
+          <span class="tl-date">February 6, 2026</span>
+          <h3 class="tl-title">a quiet afternoon 🛁</h3>
+          <div class="tl-photo tl-photo--tall"><img src="images/feb-6.jpg" alt="a quiet afternoon"></div>
+          <p class="tl-desc">A lovely, very specific kind of afternoon.</p>
+        </div>
+      </div>
+
+      <div class="tl-item tl-left">
+        <div class="tl-node"></div>
+        <div class="tl-card">
+          <span class="tl-date">February 14, 2026</span>
+          <h3 class="tl-title">valentine's day</h3>
+          <div class="tl-photo tl-photo--tall"><img src="images/feb-14-1.jpg" alt="valentine's day"></div>
+          <div class="tl-photo tl-photo--tall"><img src="images/feb-14-2.jpg" alt="valentine's day"></div>
+          <p class="tl-desc">You dressed like that and expected me to focus on the sushi.</p>
+        </div>
+      </div>
+
+      <div class="tl-item tl-right">
+        <div class="tl-node"></div>
+        <div class="tl-card">
+          <span class="tl-date">February 25, 2026</span>
+          <h3 class="tl-title">. . .</h3>
+          <div class="tl-photo tl-photo--tall">
+            <video autoplay loop muted playsinline preload="metadata">
+              <source src="images/feb-25-1.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="tl-photo tl-photo--tall">
+            <video autoplay loop muted playsinline preload="metadata">
+              <source src="images/feb-25-2.mp4" type="video/mp4">
+            </video>
+          </div>
+          <p class="tl-desc">You know what it is.</p>
+        </div>
+      </div>
+
+      <div class="tl-season"><span>spring &nbsp;·&nbsp; 2026</span></div>
+
+      <div class="tl-item tl-left">
+        <div class="tl-node"></div>
+        <div class="tl-card">
+          <span class="tl-date">March 22, 2026</span>
+          <h3 class="tl-title">someone's tummy was hurting</h3>
+          <div class="tl-photo tl-photo--tall"><img src="images/march-22.jpg" alt="someone's tummy was hurting"></div>
+          <p class="tl-desc">Still counts as a date.</p>
+        </div>
+      </div>
+
+      <div class="tl-item tl-right">
+        <div class="tl-node"></div>
+        <div class="tl-card">
+          <span class="tl-date">March 24, 2026</span>
+          <h3 class="tl-title">rotterdam</h3>
+          <div class="tl-photo tl-photo--tall"><img src="images/march-24.jpg" alt="rotterdam"></div>
+          <p class="tl-desc">Rotterdam was nice. You were better.</p>
+        </div>
+      </div>
+
+      <div class="tl-item tl-left">
+        <div class="tl-node"></div>
+        <div class="tl-card">
+          <span class="tl-date">March 31, 2026</span>
+          <h3 class="tl-title">second time at the beach</h3>
+          <div class="tl-photo tl-photo--tall">
+            <video autoplay loop muted playsinline preload="metadata">
+              <source src="images/march-31.mp4" type="video/mp4">
+            </video>
+          </div>
+          <p class="tl-desc">The second time, and equally as special as the first.</p>
+        </div>
+      </div>
+
+      <div class="tl-item tl-right">
+        <div class="tl-node"></div>
+        <div class="tl-card">
+          <span class="tl-date">April 11, 2026</span>
+          <h3 class="tl-title">flowers for my cutipie</h3>
+          <div class="tl-photo tl-photo--tall"><img src="images/apr-11.jpg" alt="flowers for my cutipie"></div>
+          <p class="tl-desc">You deserved them. You deserve them every week, actually.</p>
+        </div>
+      </div>
+
+      <div class="tl-item tl-left">
+        <div class="tl-node"></div>
+        <div class="tl-card">
+          <span class="tl-date">April 18, 2026</span>
+          <h3 class="tl-title">mcdonald's at 2 a.m.</h3>
+          <div class="tl-photo tl-photo--tall"><img src="images/apr-18.jpg" alt="mcdonald's at 2 a.m."></div>
+          <p class="tl-desc">Because you wanted it. Obviously.</p>
+        </div>
+      </div>
+
+      <div class="tl-item tl-right">
+        <div class="tl-node"></div>
+        <div class="tl-card">
+          <span class="tl-date">May 1, 2026</span>
+          <h3 class="tl-title">nine months, axe throwing, and cute ducks</h3>
+          <div class="tl-photo tl-photo--tall">
+            <video autoplay loop muted playsinline preload="metadata">
+              <source src="images/may-1-1.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="tl-photo tl-photo--tall">
+            <video autoplay loop muted playsinline preload="metadata">
+              <source src="images/may-1-2.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="tl-photo tl-photo--tall"><img src="images/may-1.jpg" alt="nine months"></div>
+          <p class="tl-desc">Nine months. We celebrated by throwing axes. Feels right for us.</p>
+        </div>
+      </div>
+
+      <div class="tl-item tl-left">
+        <div class="tl-node"></div>
+        <div class="tl-card">
+          <span class="tl-date">May 3, 2026</span>
+          <h3 class="tl-title">trampoline park + utrecht</h3>
+          <div class="tl-photo tl-photo--tall">
+            <video autoplay loop muted playsinline preload="metadata">
+              <source src="images/may-3-1.mp4" type="video/mp4">
+            </video>
+          </div>
+          <div class="tl-photo tl-photo--tall"><img src="images/may-3-1.jpg" alt="trampoline park + utrecht"></div>
+          <div class="tl-photo tl-photo--tall"><img src="images/may-3-2.jpg" alt="trampoline park + utrecht"></div>
+          <div class="tl-photo tl-photo--tall"><img src="images/may-3-3.jpg" alt="trampoline park + utrecht"></div>
+          <p class="tl-desc">We fit a lot into one day. Very on brand.</p>
+        </div>
+      </div>
+
+      <div class="tl-item tl-right">
+        <div class="tl-node"></div>
+        <div class="tl-card">
+          <span class="tl-date">May 9, 2026</span>
+          <h3 class="tl-title">you and pankina</h3>
+          <div class="tl-photo"><img src="images/may-9.jpg" alt="you and pankina"></div>
+          <p class="tl-desc">Two of my favourite things, in one frame.</p>
+        </div>
+      </div>
+
+      </div><!-- /tl-thread -->
+
+      <div class="tl-finale">
+        <div class="tl-finale-heart"></div>
+        <p class="tl-finale-text">still writing it.</p>
+        <p class="tl-finale-sub">the next chapter starts very, very soon.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ III · SOUNDTRACK ════════ -->
+  <section id="soundtrack" class="chapter soundtrack-section">
+    <div class="chapter-mark"><span class="chapter-num">III</span><span class="chapter-name">our soundtrack</span></div>
+    <h2 class="section-heading">three songs that are ours</h2>
+
+    <div class="records">
+      <div class="record-set">
+        <div class="record record--pink" data-record="1">
+          <div class="record-disc">
+            <div class="record-grooves"></div>
+            <div class="record-label">
+              <span class="record-song">White Dress</span>
+              <span class="record-artist">Kanye West</span>
+            </div>
+            <div class="record-hole"></div>
+          </div>
+          <div class="record-arm"></div>
+        </div>
+      </div>
+
+      <div class="record-set">
+        <div class="record record--navy" data-record="2">
+          <div class="record-disc">
+            <div class="record-grooves"></div>
+            <div class="record-label">
+              <span class="record-song">Heartbeat</span>
+              <span class="record-artist">Childish Gambino</span>
+            </div>
+            <div class="record-hole"></div>
+          </div>
+          <div class="record-arm"></div>
+        </div>
+      </div>
+
+      <div class="record-set" id="flashing-set">
+        <div class="record record--purple" data-record="3">
+          <div class="record-disc">
+            <div class="record-grooves"></div>
+            <div class="record-label">
+              <span class="record-song">Flashing Lights</span>
+              <span class="record-artist">Kanye West</span>
+            </div>
+            <div class="record-hole"></div>
+          </div>
+          <div class="record-arm"></div>
+        </div>
+        <!-- karaoke surprise pops up right here -->
+        <div id="karaoke-overlay">
+          <video id="karaoke-video" playsinline preload="auto">
+            <source src="audio/karaoke-flashing-lights.mp4" type="video/mp4">
+          </video>
+          <button id="karaoke-close" type="button">my ears hurt</button>
+        </div>
+      </div>
+    </div>
+    <p class="records-hint">click a record to spin it</p>
+  </section>
+
+  <!-- ════════ IV · REASONS ════════ -->
+  <section id="reasons" class="chapter reasons-section">
+    <div class="chapter-mark"><span class="chapter-num">IV</span><span class="chapter-name">reasons</span></div>
+    <h2 class="section-heading">why I love you</h2>
+
+    <div class="reason-stage">
+      <div class="reason-card" id="reason-card">
+        <span class="reason-num" id="reason-num">no. 1</span>
+        <p class="reason-text" id="reason-text">click below to begin</p>
+        <button class="reason-btn" id="reason-btn">tell me another ✦</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════ FOOTER ════════ -->
+  <footer class="footer">
+    <p class="footer-script">see you very soon, my love</p>
+    <p class="footer-main">made with ♥ by David, for Ana</p>
+    <p class="footer-sub">May 2026</p>
+  </footer>
+
+  <!-- ════════ SECRET MODAL ════════ -->
+  <div class="modal-overlay" id="modal-overlay"></div>
+  <div class="secret-modal" id="secret-modal">
+    <button class="modal-close" id="modal-close" aria-label="close">✕</button>
+    <p class="modal-emoji">🤫</p>
+    <h3 class="modal-title">you found a secret</h3>
+    <p class="modal-text">the countdown is lying to you, just a little.</p>
+    <p class="modal-date">I'm actually coming on<br><strong>May 28th at 1 a.m.</strong></p>
+    <p class="modal-small">don't tell me you know. 🤭</p>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="js/petals.js"></script>
+  <script src="js/countdown.js"></script>
+  <script src="js/cursor.js"></script>
+  <script src="js/easter-eggs.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
