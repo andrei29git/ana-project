@@ -113,6 +113,16 @@ records.forEach(rec => {
   const karaokeVideo = document.getElementById('karaoke-video');
   const closeBtn = document.getElementById('karaoke-close');
   let triggered = false;
+  let preloaded = false;
+
+  // start fetching the karaoke video the moment Flashing Lights plays
+  flashingAudio.addEventListener('play', () => {
+    if (!preloaded) {
+      preloaded = true;
+      karaokeVideo.preload = 'auto';
+      karaokeVideo.load();
+    }
+  });
 
   closeBtn.addEventListener('click', () => {
     overlay.classList.remove('visible');
