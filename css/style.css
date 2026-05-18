@@ -1085,7 +1085,8 @@ section { position: relative; z-index: 2; }
   aspect-ratio: 4 / 5;
   overflow: hidden;
 }
-.hof-photo img {
+.hof-photo img,
+.hof-photo video {
   width: 100%;
   height: 100%;
   object-fit: cover;

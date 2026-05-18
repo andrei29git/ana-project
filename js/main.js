@@ -116,6 +116,18 @@ records.forEach(rec => {
   });
 })();
 
+// ── Seamless looping for hall-of-fame video (no gap between loops) ──
+(function () {
+  document.querySelectorAll('.hof-photo video').forEach(v => {
+    v.addEventListener('timeupdate', () => {
+      if (v.duration && v.currentTime >= v.duration - 0.15) {
+        v.currentTime = 0;
+        v.play().catch(() => {});
+      }
+    });
+  });
+})();
+
 // ── Flashing Lights karaoke surprise at 0:42 ────────────────────────
 (function () {
   const flashingRec = document.querySelector('.record[data-record="3"]');
