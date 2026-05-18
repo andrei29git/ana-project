@@ -84,21 +84,36 @@ records.forEach(rec => {
   });
 });
 
-// ── Pause off-screen timeline videos to save mobile bandwidth ───────
+// ── Click-to-play timeline videos; pause others when one plays ──────
 (function () {
-  if (!('IntersectionObserver' in window)) return;
-  const timelineVideos = document.querySelectorAll('.tl-photo video');
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      const v = entry.target;
-      if (entry.isIntersecting) {
+  const timelineVideos = Array.from(document.querySelectorAll('.tl-photo video'));
+
+  timelineVideos.forEach(v => {
+    v.parentElement.classList.add('has-video');
+
+    v.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (v.paused) {
+        // pause every other video and any record audio
+        timelineVideos.forEach(other => { if (other !== v) other.pause(); });
+        players.forEach(audio => audio.pause());
+        records.forEach(rec => { if (rec.classList.contains('spinning')) rec.classList.add('paused'); });
         v.play().catch(() => {});
       } else {
         v.pause();
       }
     });
-  }, { rootMargin: '300px 0px', threshold: 0 });
-  timelineVideos.forEach(v => io.observe(v));
+
+    v.addEventListener('play',  () => v.parentElement.classList.add('playing'));
+    v.addEventListener('pause', () => v.parentElement.classList.remove('playing'));
+  });
+
+  // when a record starts, pause all videos
+  records.forEach(rec => {
+    rec.addEventListener('click', () => {
+      timelineVideos.forEach(v => v.pause());
+    });
+  });
 })();
 
 // ── Flashing Lights karaoke surprise at 0:42 ────────────────────────

@@ -635,6 +635,24 @@ section { position: relative; z-index: 2; }
 .placeholder-vid { background: #d9cfe0; color: #6a5478; }
 .tl-photo--tall  { aspect-ratio: 9 / 16; }
 .tl-photo + .tl-photo { margin-top: 0.6rem; }
+.tl-photo.has-video { position: relative; cursor: pointer; }
+.tl-photo.has-video video { cursor: pointer; }
+.tl-photo.has-video::after {
+  content: '';
+  position: absolute;
+  top: 50%; left: 50%;
+  width: 64px; height: 64px;
+  margin: -32px 0 0 -32px;
+  background: rgba(0,0,0,0.55);
+  border-radius: 50%;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white'><path d='M8 5v14l11-7z'/></svg>");
+  background-repeat: no-repeat;
+  background-position: 54% center;
+  background-size: 28px 28px;
+}
+.tl-photo.has-video.playing::after { opacity: 0; }
 .tl-photo--fav   { border: 2px dashed var(--gold); }
 .tl-photo small {
   font-family: var(--sans);
