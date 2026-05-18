@@ -1252,8 +1252,8 @@ section { position: relative; z-index: 2; }
   .records { padding: 0 1rem; gap: 3rem; justify-content: center; }
 
   /* karaoke popup scales down and shifts below the record on mobile */
-  #karaoke-overlay { width: 220px; height: 390px; top: calc(50% + 110px); }
-  #karaoke-close { font-size: 0.62rem; padding: 0.55rem 1.1rem; }
+  #karaoke-overlay { width: 170px; height: 302px; top: calc(50% + 50px); }
+  #karaoke-close { font-size: 0.62rem; padding: 0.55rem 1.1rem; top: calc(100% + 1rem); }
 }
 
 @media (max-width: 420px) {
