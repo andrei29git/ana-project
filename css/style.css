@@ -1248,16 +1248,8 @@ section { position: relative; z-index: 2; }
   .flip-sep  { line-height: 66px; font-size: 1.3rem; }
   .letter-paper { padding: 3rem 1.6rem 2.2rem; }
 
-  /* records shrink to fit phone width and stay in a single row */
-  .records { padding: 0 1rem; gap: 0.8rem; justify-content: space-around; }
-  .record-set { max-width: 110px; gap: 0.5rem; }
-  .record { width: 95px; height: 95px; }
-  .record-arm { height: 56px; top: -6px; right: -4px; width: 3px; }
-  .record-arm::after { width: 7px; height: 7px; bottom: -4px; left: -2px; }
-  .record-label { padding: 0.32rem 0.15rem 0; font-size: 0.4rem; letter-spacing: 0.08em; }
-  .record-song { font-size: 0.55rem; }
-  .record-artist { font-size: 0.32rem; }
-  .record-hole { width: 6px; height: 6px; }
+  /* on mobile records stack centered instead of pushed to the sides */
+  .records { padding: 0 1rem; gap: 3rem; justify-content: center; }
 
   /* karaoke popup scales down on mobile */
   #karaoke-overlay { width: 220px; height: 390px; }
