@@ -120,10 +120,13 @@ records.forEach(rec => {
 (function () {
   document.querySelectorAll('.hof-photo video').forEach(v => {
     v.addEventListener('timeupdate', () => {
-      if (v.duration && v.currentTime >= v.duration - 0.15) {
+      if (v.duration && v.currentTime >= v.duration - 0.3) {
         v.currentTime = 0;
-        v.play().catch(() => {});
       }
+    });
+    v.addEventListener('ended', () => {
+      v.currentTime = 0;
+      v.play().catch(() => {});
     });
   });
 })();
