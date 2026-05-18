@@ -1053,7 +1053,52 @@ section { position: relative; z-index: 2; }
   transform: translateX(-50%) translateY(-2px);
 }
 
-/* ════════ IV · REASONS ════════ */
+/* ════════ IV · HALL OF FAME ════════ */
+.hof-section { background: var(--paper); }
+.hof-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 1rem;
+  max-width: 1100px;
+  width: 100%;
+}
+.hof-card {
+  flex: 1 1 280px;
+  max-width: 320px;
+  margin: 0;
+  transform: rotate(var(--tilt, 0deg));
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.hof-card:nth-child(1) { --tilt: -2.2deg; }
+.hof-card:nth-child(2) { --tilt: 1.4deg; }
+.hof-card:nth-child(3) { --tilt: -1.6deg; }
+.hof-card:hover { transform: rotate(0deg) translateY(-6px) scale(1.02); }
+.hof-photo {
+  background: var(--paper);
+  padding: 0.7rem 0.7rem 1.4rem;
+  border-radius: 3px;
+  box-shadow:
+    0 10px 28px rgba(58,43,43,0.18),
+    0 2px 6px rgba(58,43,43,0.1);
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+}
+.hof-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 1px;
+}
+
+@media (max-width: 760px) {
+  .hof-grid { gap: 2.5rem; }
+  .hof-card { max-width: 240px; flex: 1 1 100%; }
+}
+
+/* ════════ V · REASONS ════════ */
 .reasons-section { background: var(--paper-2); }
 
 .reason-stage { perspective: 900px; }
