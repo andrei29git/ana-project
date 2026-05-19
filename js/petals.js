@@ -52,11 +52,6 @@
     ctx.restore();
   }
 
-  function openSecret() {
-    document.getElementById('modal-overlay').classList.add('open');
-    document.getElementById('secret-modal').classList.add('open');
-  }
-
   // canvas has pointer-events:none, so detect hits at the document level
   function petalAt(cx, cy) {
     for (let i = petals.length - 1; i >= 0; i--) {
@@ -69,7 +64,10 @@
 
   document.addEventListener('click', (e) => {
     const i = petalAt(e.clientX, e.clientY);
-    if (i !== -1) { petals.splice(i, 1); openSecret(); }
+    if (i !== -1) {
+      petals.splice(i, 1);
+      if (window.openApology) window.openApology(e);
+    }
   }, true); // capture phase - fires before other handlers
 
   let frame = 0;

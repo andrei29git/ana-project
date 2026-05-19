@@ -175,6 +175,77 @@ section { position: relative; z-index: 2; }
   opacity: 0;
 }
 
+/* ─── apology video modal ─── */
+.apology-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(58,43,43,0.6);
+  backdrop-filter: blur(6px);
+  z-index: 2050;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s;
+}
+.apology-overlay.open { opacity: 1; pointer-events: all; }
+
+.apology-wrap {
+  position: fixed;
+  inset: 0;
+  z-index: 2051;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s;
+}
+.apology-wrap.open { opacity: 1; pointer-events: all; }
+
+.apology-modal {
+  position: relative;
+  background: var(--paper);
+  border: 1px solid var(--gold-soft);
+  border-radius: 8px;
+  padding: 2.4rem 1.6rem 1.6rem;
+  width: min(820px, 94vw);
+  max-height: 92vh;
+  box-shadow: 0 30px 80px rgba(58,43,43,0.4);
+  transform: translate(var(--jump-x, 0px), var(--jump-y, 0px)) scale(0.05);
+  transition: transform 0.45s cubic-bezier(0.34, 1.36, 0.5, 1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+.apology-wrap.open .apology-modal {
+  transform: translate(0, 0) scale(1);
+}
+.apology-modal-close {
+  position: absolute;
+  top: 0.6rem; right: 0.9rem;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  color: var(--ink-faint);
+  cursor: pointer;
+  transition: color 0.2s;
+}
+.apology-modal-close:hover { color: var(--wine); }
+.apology-modal-eyebrow {
+  font-family: var(--script);
+  font-size: 1.4rem;
+  color: var(--wine);
+  text-align: center;
+}
+#apology-video {
+  width: 100%;
+  max-height: 78vh;
+  border-radius: 4px;
+  background: #000;
+  outline: none;
+}
+
 .hero-center {
   display: flex;
   flex-direction: column;
@@ -848,7 +919,295 @@ section { position: relative; z-index: 2; }
   color: var(--ink-faint);
 }
 
-/* ════════ III · SOUNDTRACK ════════ */
+/* ════════ III · A MAP OF US ════════ */
+.map-section { background: var(--paper); }
+.map-caption {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+  text-align: center;
+  margin-top: -2rem;
+  margin-bottom: 2.5rem;
+}
+.map-stage {
+  width: 100%;
+  max-width: 1080px;
+  display: grid;
+  grid-template-columns: 1.55fr 1fr;
+  gap: 2.2rem;
+  align-items: start;
+}
+.map-canvas {
+  width: 100%;
+  height: auto;
+  background:
+    radial-gradient(ellipse at 50% 50%, rgba(171,127,55,0.05) 0%, transparent 70%),
+    var(--paper);
+  border: 1px solid var(--gold-soft);
+  border-radius: 4px;
+  box-shadow: inset 0 0 0 6px var(--paper),
+              inset 0 0 0 7px rgba(171,127,55,0.25),
+              0 18px 50px rgba(58,43,43,0.10);
+  padding: 6px;
+}
+
+/* compass + map labels */
+.map-compass-letter {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.7rem;
+  fill: var(--gold);
+}
+.map-country-label {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 14px;
+  fill: var(--ink-soft);
+  letter-spacing: 0.06em;
+}
+.map-sea-label {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 11px;
+  fill: var(--ink-faint);
+  letter-spacing: 0.14em;
+  opacity: 0.7;
+}
+/* thread dashes flow toward Romania */
+.map-thread {
+  animation: map-thread-flow 18s linear infinite;
+}
+@keyframes map-thread-flow {
+  to { stroke-dashoffset: -180; }
+}
+
+/* curved "≈ 2 100 km apart" label along the thread */
+.map-distance {
+  font-family: var(--sans);
+  font-size: 10px;
+  letter-spacing: 0.28em;
+  fill: var(--ink-faint);
+  text-transform: uppercase;
+}
+
+/* ─── pins ─── */
+.map-pin {
+  cursor: pointer;
+  transition: transform 0.25s ease;
+  transform-box: fill-box;
+  outline: none;
+}
+.map-pin:focus { outline: none; }
+.map-pin:focus-visible {
+  outline: 1.5px dashed var(--gold);
+  outline-offset: 3px;
+  border-radius: 50%;
+}
+.map-pin-halo {
+  fill: var(--wine);
+  opacity: 0.08;
+  transition: opacity 0.3s, transform 0.3s;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+.map-pin-dot {
+  fill: var(--wine);
+  transition: fill 0.25s;
+}
+.map-pin-inner {
+  fill: var(--paper);
+}
+.map-pin-label {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 12px;
+  fill: var(--ink);
+  opacity: 0;
+  transition: opacity 0.25s;
+  pointer-events: none;
+  letter-spacing: 0.02em;
+}
+.map-pin-label--big {
+  font-size: 13px;
+  font-weight: 500;
+  opacity: 0.8;
+}
+.map-pin:hover .map-pin-halo,
+.map-pin:focus .map-pin-halo,
+.map-pin--active .map-pin-halo {
+  opacity: 0.25;
+  transform: scale(1.4);
+}
+.map-pin:hover .map-pin-dot,
+.map-pin--active .map-pin-dot {
+  fill: var(--gold);
+}
+.map-pin:hover .map-pin-label,
+.map-pin:focus .map-pin-label,
+.map-pin--active .map-pin-label {
+  opacity: 1;
+}
+.map-pin--active .map-pin-halo {
+  animation: map-pin-pulse 1.8s ease-in-out infinite;
+}
+@keyframes map-pin-pulse {
+  0%, 100% { opacity: 0.22; transform: scale(1.4); }
+  50%      { opacity: 0.35; transform: scale(1.7); }
+}
+
+/* ─── memory panel ─── */
+.map-panel {
+  position: relative;
+  background: var(--paper);
+  border: 1px solid var(--gold-soft);
+  border-radius: 4px;
+  padding: 1.6rem 1.6rem 1.2rem;
+  box-shadow: 0 14px 36px rgba(58,43,43,0.10);
+  min-height: 320px;
+  transition: box-shadow 0.4s ease;
+}
+.map-panel:not(.map-panel--open) .map-panel-city,
+.map-panel:not(.map-panel--open) .map-panel-subtitle,
+.map-panel:not(.map-panel--open) .map-panel-blurb {
+  color: var(--ink-faint);
+  font-style: italic;
+}
+.map-panel:not(.map-panel--open) .map-panel-close { display: none; }
+.map-panel--open {
+  box-shadow: 0 14px 36px rgba(58,43,43,0.16);
+}
+.map-panel::after {
+  content: '';
+  position: absolute;
+  inset: 6px;
+  border: 1px solid rgba(171,127,55,0.18);
+  pointer-events: none;
+  border-radius: 2px;
+}
+.map-panel--open {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.map-panel-close {
+  position: absolute;
+  top: 0.7rem; right: 0.9rem;
+  background: none;
+  border: none;
+  font-size: 0.95rem;
+  color: var(--ink-faint);
+  cursor: pointer;
+  transition: color 0.2s;
+  z-index: 2;
+}
+.map-panel-close:hover { color: var(--wine); }
+.map-panel-eyebrow {
+  font-family: var(--sans);
+  font-size: 0.6rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.map-panel-city {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(1.6rem, 3vw, 2.1rem);
+  color: var(--ink);
+  margin-top: 0.4rem;
+  line-height: 1.05;
+}
+.map-panel-subtitle {
+  font-family: var(--sans);
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-top: 0.25rem;
+}
+.map-panel-blurb {
+  font-family: var(--script);
+  font-size: 1.25rem;
+  color: var(--wine-2);
+  margin-top: 0.7rem;
+  line-height: 1.2;
+}
+.map-panel-count {
+  font-family: var(--sans);
+  font-size: 0.62rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-top: 1.1rem;
+  padding-top: 0.7rem;
+  border-top: 1px solid rgba(171,127,55,0.25);
+}
+.map-panel-list {
+  list-style: none;
+  margin-top: 0.6rem;
+  max-height: 320px;
+  overflow-y: auto;
+  padding-right: 0.3rem;
+}
+.map-panel-list::-webkit-scrollbar { width: 4px; }
+.map-panel-list::-webkit-scrollbar-thumb {
+  background: var(--gold-soft);
+  border-radius: 2px;
+}
+.map-mem {
+  display: flex;
+  flex-direction: column;
+  padding: 0.55rem 0.4rem;
+  border-bottom: 1px dotted rgba(171,127,55,0.3);
+  opacity: 0;
+  transform: translateY(6px);
+  animation: map-mem-in 0.4s ease forwards;
+  border-radius: 4px;
+  outline: none;
+}
+.map-mem:last-child { border-bottom: none; }
+.map-mem--clickable { cursor: pointer; transition: background 0.2s, transform 0.2s; }
+.map-mem--clickable:hover {
+  background: rgba(171,127,55,0.08);
+  transform: translateX(3px);
+}
+.map-mem--clickable:hover .map-mem-title { color: var(--wine); }
+.map-mem--clickable:focus-visible {
+  outline: 1.5px dashed var(--gold);
+  outline-offset: 2px;
+}
+@keyframes map-mem-in {
+  to { opacity: 1; transform: translateY(0); }
+}
+.map-mem-date {
+  font-family: var(--sans);
+  font-size: 0.58rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.map-mem-title {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.98rem;
+  color: var(--ink);
+  margin-top: 0.15rem;
+  line-height: 1.3;
+}
+
+.map-empty {
+  display: none;     /* panel itself holds the empty state */
+}
+
+@media (max-width: 880px) {
+  .map-stage {
+    grid-template-columns: 1fr;
+    gap: 1.4rem;
+  }
+  .map-panel { min-height: 0; }
+}
+
+/* ════════ IV · SOUNDTRACK ════════ */
 .soundtrack-section { background: var(--paper-2); }
 
 .records {
@@ -1053,7 +1412,7 @@ section { position: relative; z-index: 2; }
   transform: translateX(-50%) translateY(-2px);
 }
 
-/* ════════ IV · HALL OF FAME ════════ */
+/* ════════ V · HALL OF FAME ════════ */
 .hof-section { background: var(--paper); }
 .hof-grid {
   display: flex;
@@ -1162,6 +1521,198 @@ section { position: relative; z-index: 2; }
 }
 .reason-btn:hover { background: var(--wine); color: var(--paper); }
 
+/* ════════ VII · CONSTELLATION ════════ */
+.constellation-section { background: var(--paper-2); }
+.constellation-caption {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+  margin-top: -2rem;
+  margin-bottom: 2.4rem;
+  letter-spacing: 0.03em;
+}
+.constellation-stage {
+  width: 100%;
+  max-width: 640px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.6rem;
+}
+.constellation-chart {
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 24px 60px rgba(58,43,43,0.22));
+  border-radius: 50%;
+}
+
+/* chart inner labels */
+.c-card {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 12px;
+  fill: #ab7f37;
+  letter-spacing: 0.18em;
+}
+.c-chart-title {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-size: 8.5px;
+  fill: #ab7f37;
+  letter-spacing: 0.25em;
+  text-transform: lowercase;
+}
+.c-bg-star {
+  fill: #fef0c8;
+}
+.c-named-star {
+  fill: #fff2c8;
+  filter: url(#star-bloom);
+  opacity: 0.85;
+}
+.c-named-label {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 8px;
+  fill: rgba(254,240,200,0.55);
+  letter-spacing: 0.08em;
+}
+
+/* ─── puzzle stars ─── */
+.c-puzzle { cursor: pointer; transform-box: fill-box; outline: none; }
+.c-puzzle:focus { outline: none; }
+.c-puzzle:focus-visible {
+  outline: 1.5px dashed #ffd97a;
+  outline-offset: 4px;
+  border-radius: 50%;
+}
+.c-puzzle-halo {
+  fill: #fff2c8;
+  opacity: 0;
+  transition: opacity 0.35s;
+}
+.c-puzzle-dot {
+  fill: #fef0c8;
+  opacity: 0.55;
+  transition: opacity 0.3s, fill 0.3s, r 0.3s;
+}
+.c-puzzle:hover .c-puzzle-dot { opacity: 0.95; }
+.c-puzzle:hover .c-puzzle-halo { opacity: 0.18; }
+
+/* the "next-to-click" star pulses softly */
+.c-puzzle--next .c-puzzle-halo {
+  opacity: 0.25;
+  animation: c-pulse 2.2s ease-in-out infinite;
+  transform-origin: center;
+  transform-box: fill-box;
+}
+.c-puzzle--next .c-puzzle-dot {
+  opacity: 1;
+  fill: #fff2c8;
+  animation: c-pulse-dot 2.2s ease-in-out infinite;
+}
+@keyframes c-pulse {
+  0%, 100% { opacity: 0.18; transform: scale(0.9); }
+  50%      { opacity: 0.45; transform: scale(1.45); }
+}
+@keyframes c-pulse-dot {
+  0%, 100% { r: 2.6; filter: drop-shadow(0 0 2px #fff2c8); }
+  50%      { r: 3.4; filter: drop-shadow(0 0 8px #fff2c8); }
+}
+
+/* activated stars stay lit + gold */
+.c-puzzle--lit .c-puzzle-dot {
+  fill: #ffd97a;
+  opacity: 1;
+  filter: drop-shadow(0 0 5px #ffd97a);
+  animation: none;
+}
+.c-puzzle--lit .c-puzzle-halo {
+  opacity: 0.3;
+  fill: #ffd97a;
+  animation: none;
+}
+
+/* wrong-click shake */
+.c-puzzle--wrong {
+  animation: c-shake 0.4s ease;
+}
+@keyframes c-shake {
+  0%, 100% { transform: translate(var(--tx, 0px), var(--ty, 0px)); }
+  25%      { transform: translate(calc(var(--tx, 0px) - 4px), var(--ty, 0px)); }
+  75%      { transform: translate(calc(var(--tx, 0px) + 4px), var(--ty, 0px)); }
+}
+
+/* connecting lines */
+.c-puzzle-line {
+  stroke: #ffd97a;
+  stroke-width: 1.2;
+  opacity: 0;
+  stroke-dasharray: 200;
+  stroke-dashoffset: 200;
+  animation: c-line-draw 0.55s ease-out forwards;
+  filter: drop-shadow(0 0 3px rgba(255,217,122,0.6));
+}
+@keyframes c-line-draw {
+  to { opacity: 1; stroke-dashoffset: 0; }
+}
+
+/* when solved, everything glows a little more */
+.constellation-chart--solved .c-puzzle-line {
+  stroke-width: 1.6;
+  filter: drop-shadow(0 0 6px rgba(255,217,122,0.9));
+}
+.constellation-chart--solved .c-puzzle-dot {
+  filter: drop-shadow(0 0 10px #ffd97a);
+}
+
+/* ─── hint ─── */
+.constellation-hint {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.92rem;
+  color: var(--ink-faint);
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.6s;
+}
+.constellation-hint--show { opacity: 1; }
+.constellation-hint--hidden { opacity: 0 !important; }
+
+/* ─── reveal ─── */
+.constellation-reveal {
+  text-align: center;
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 0.9s ease, transform 0.9s ease;
+  margin-top: -0.4rem;
+}
+.constellation-reveal--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.constellation-reveal-script {
+  font-family: var(--script);
+  font-size: clamp(3rem, 7vw, 4.6rem);
+  color: var(--wine);
+  display: block;
+  line-height: 1;
+  letter-spacing: 0.02em;
+}
+.constellation-reveal-desc {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+  margin-top: 0.9rem;
+  line-height: 1.55;
+}
+
+@media (max-width: 760px) {
+  .constellation-stage { gap: 1rem; }
+}
+
 /* ════════ FOOTER ════════ */
 .footer {
   background: var(--ink);
@@ -1268,6 +1819,222 @@ section { position: relative; z-index: 2; }
   font-size: 0.72rem;
   letter-spacing: 0.06em;
   color: var(--ink-faint);
+}
+
+/* ════════ MEMORY MODAL (timeline card pop-up from map) ════════ */
+.memory-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(58,43,43,0.55);
+  backdrop-filter: blur(5px);
+  z-index: 2050;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s;
+}
+.memory-overlay.open { opacity: 1; pointer-events: all; }
+
+/* flex-centered wrapper - the centering stays stable as the modal grows
+   (which it does when videos load their intrinsic dimensions) */
+.memory-wrap {
+  position: fixed;
+  inset: 0;
+  z-index: 2051;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s;
+}
+.memory-wrap.open { opacity: 1; pointer-events: all; }
+
+.memory-modal {
+  position: relative;
+  width: min(560px, 92vw);
+  max-height: 88vh;
+  overflow-y: auto;
+  background: var(--paper);
+  border: 1px solid var(--gold-soft);
+  border-radius: 8px;
+  padding: 2.4rem 1.6rem 1.6rem;
+  box-shadow: 0 30px 80px rgba(58,43,43,0.4);
+  transform: scale(0.94);
+  transition: transform 0.35s cubic-bezier(0.34,1.4,0.64,1);
+}
+.memory-wrap.open .memory-modal { transform: scale(1); }
+.memory-modal-close {
+  position: absolute;
+  top: 0.6rem; right: 0.9rem;
+  background: none;
+  border: none;
+  font-size: 1rem;
+  color: var(--ink-faint);
+  cursor: pointer;
+  z-index: 2;
+  transition: color 0.2s;
+}
+.memory-modal-close:hover { color: var(--wine); }
+
+/* the cloned .tl-card needs to fit the modal instead of the timeline column */
+.memory-modal-content .tl-card {
+  width: 100%;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0.2rem 0.5rem;
+}
+.memory-modal-content .tl-card::before { display: none; }
+
+/* cap photos/videos so the whole card fits in the viewport (no scroll).
+   exclude decorative scenes (rain, lovenote) - they use absolute children
+   and need their natural aspect-ratio to size themselves. */
+.memory-modal-content .tl-card > .tl-photo:not(.rain-scene):not(.tl-lovenote) {
+  aspect-ratio: auto;
+  height: auto;
+  max-height: 58vh;
+  width: fit-content;
+  max-width: 100%;
+  margin: 0.6rem auto 0;
+}
+.memory-modal-content .tl-card > .tl-photo:not(.rain-scene):not(.tl-lovenote) img,
+.memory-modal-content .tl-card > .tl-photo:not(.rain-scene):not(.tl-lovenote) video {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 58vh;
+  object-fit: contain;
+}
+/* decorative scenes - keep them centered, full modal width */
+.memory-modal-content .tl-card > .rain-scene,
+.memory-modal-content .tl-card > .tl-lovenote {
+  margin-top: 0.6rem;
+}
+
+/* mobile scroll padding */
+@media (max-width: 760px) {
+  .memory-modal { padding: 2rem 1rem 1.2rem; }
+}
+
+/* ════════ PANKINA - the wandering cat ════════ */
+.pankina {
+  position: fixed;
+  left: 0;
+  bottom: 14px;
+  z-index: 47;          /* above sections, below petals (50) & grain (60) */
+  width: 56px;
+  height: 44px;
+  cursor: pointer;
+  transform: translateX(-80px);
+  filter: drop-shadow(0 4px 6px rgba(58,43,43,0.18));
+  transition: filter 0.3s;
+}
+.pankina:hover { filter: drop-shadow(0 4px 6px rgba(58,43,43,0.28)) brightness(1.05); }
+
+.pankina-sprite,
+.pankina-sleep-sprite { width: 100%; height: 100%; overflow: visible; }
+.pankina-sprite       { display: block; }
+.pankina-sleep-sprite { display: none; }
+.pankina--sleeping .pankina-sprite       { display: none; }
+.pankina--sleeping .pankina-sleep-sprite { display: block; }
+
+/* ── tail wag while walking ── */
+.pankina .pk-tail {
+  transform-origin: 6px 30px;
+  animation: pk-tail-wag 1.2s ease-in-out infinite;
+}
+@keyframes pk-tail-wag {
+  0%, 100% { transform: rotate(-6deg); }
+  50%      { transform: rotate(8deg); }
+}
+
+/* ── leg shuffle (walking) ── */
+.pankina--walking .pk-leg--back-1,
+.pankina--walking .pk-leg--front-2 {
+  animation: pk-leg-A 0.45s ease-in-out infinite;
+  transform-origin: 50% 0;
+}
+.pankina--walking .pk-leg--back-2,
+.pankina--walking .pk-leg--front-1 {
+  animation: pk-leg-B 0.45s ease-in-out infinite;
+  transform-origin: 50% 0;
+}
+@keyframes pk-leg-A {
+  0%, 100% { transform: rotate(-14deg); }
+  50%      { transform: rotate( 14deg); }
+}
+@keyframes pk-leg-B {
+  0%, 100% { transform: rotate( 14deg); }
+  50%      { transform: rotate(-14deg); }
+}
+
+/* ── sitting: stop the leg animation but keep legs full size
+   (no stubs poking out of body), slow tail swish ── */
+.pankina--sitting .pk-leg { animation: none; transform: none; }
+.pankina--sitting .pk-tail {
+  animation: pk-tail-swish 3.5s ease-in-out infinite;
+}
+@keyframes pk-tail-swish {
+  0%, 100% { transform: rotate(-2deg); }
+  50%      { transform: rotate(-22deg); }
+}
+
+/* ── eye state ── */
+.pk-eye-closed { opacity: 0; transition: opacity 0.25s; }
+.pankina--sleeping .pk-eye        { opacity: 0; }
+.pankina--sleeping .pk-eye-closed { opacity: 1; }
+
+/* ── sleeping: gentle breathing on the loaf sprite ── */
+.pankina--sleeping .pankina-sleep-sprite {
+  animation: pk-sleep-breath 3s ease-in-out infinite;
+  transform-origin: 50% 100%;
+}
+@keyframes pk-sleep-breath {
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.02, 0.97); }
+}
+
+/* ── floating Zs (sleep) ── */
+.pankina-zs {
+  position: absolute;
+  top: -8px;
+  right: -2px;
+  width: 30px;
+  height: 30px;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+.pankina--sleeping .pankina-zs { opacity: 1; }
+.pankina-zs span {
+  position: absolute;
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 500;
+  color: var(--wine-2);
+  opacity: 0;
+}
+.pankina--sleeping .pankina-zs span:nth-child(1) {
+  font-size: 0.7rem; left: 4px;  bottom: 0;
+  animation: pk-z-rise 3s ease-out infinite;
+}
+.pankina--sleeping .pankina-zs span:nth-child(2) {
+  font-size: 0.85rem; left: 10px; bottom: 0;
+  animation: pk-z-rise 3s ease-out infinite 0.9s;
+}
+.pankina--sleeping .pankina-zs span:nth-child(3) {
+  font-size: 1rem; left: 16px; bottom: 0;
+  animation: pk-z-rise 3s ease-out infinite 1.8s;
+}
+@keyframes pk-z-rise {
+  0%   { opacity: 0; transform: translate(0, 0) rotate(-8deg); }
+  20%  { opacity: 0.9; }
+  100% { opacity: 0; transform: translate(8px, -22px) rotate(8deg); }
+}
+
+@media (max-width: 760px) {
+  .pankina { width: 42px; height: 32px; bottom: 10px; }
 }
 
 /* ════════ RESPONSIVE ════════ */

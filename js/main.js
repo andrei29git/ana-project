@@ -292,6 +292,28 @@ gsap.from('.tl-finale', {
   scrollTrigger: { trigger: '.tl-finale', start: 'top 88%' },
 });
 
+/* ─── Map reveal ──────────────────────────────────────────────────── */
+gsap.from('.map-canvas', {
+  opacity: 0, y: 50, duration: 1.1, ease: 'power3.out',
+  scrollTrigger: { trigger: '.map-section', start: 'top 72%' },
+});
+gsap.from('.map-pin', {
+  scale: 0, opacity: 0, duration: 0.5, ease: 'back.out(2)',
+  stagger: { each: 0.08, from: 'random' },
+  scrollTrigger: { trigger: '.map-canvas', start: 'top 70%' },
+  transformOrigin: '50% 50%',
+});
+
+/* ─── Constellation reveal ────────────────────────────────────────── */
+gsap.from('.constellation-chart', {
+  opacity: 0, scale: 0.92, duration: 1.2, ease: 'power3.out',
+  scrollTrigger: { trigger: '.constellation-section', start: 'top 72%' },
+});
+gsap.from('.c-bg-star, .c-named-star, .c-named-label, .c-puzzle', {
+  opacity: 0, duration: 1, ease: 'power2.out', stagger: { each: 0.008, from: 'random' },
+  scrollTrigger: { trigger: '.constellation-section', start: 'top 65%' },
+});
+
 /* ─── Records reveal ──────────────────────────────────────────────── */
 gsap.from('.record-set', {
   opacity: 0, y: 60, duration: 1, stagger: 0.18, ease: 'power3.out',

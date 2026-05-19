@@ -48,24 +48,21 @@
   update(SHOWN_DATE);
   setInterval(() => update(SHOWN_DATE), 1000);
 
-  // ── Triple-click easter egg ──────────────────────────────────────
+  // ── Triple-click easter egg → opens apology video ─────────────────
   let clickCount = 0;
   let clickTimer  = null;
+  let lastEvent   = null;
 
-  document.getElementById('countdown').addEventListener('click', () => {
+  document.getElementById('countdown').addEventListener('click', (e) => {
+    lastEvent = e;
     clickCount++;
     clearTimeout(clickTimer);
 
     if (clickCount >= 3) {
       clickCount = 0;
-      revealRealDate();
+      if (window.openApology) window.openApology(lastEvent);
       return;
     }
     clickTimer = setTimeout(() => { clickCount = 0; }, 600);
   });
-
-  function revealRealDate() {
-    document.getElementById('modal-overlay').classList.add('open');
-    document.getElementById('secret-modal').classList.add('open');
-  }
 })();

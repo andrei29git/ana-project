@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Outfit:wght@300;400;500&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=5">
+  <link rel="stylesheet" href="css/style.css?v=6">
 </head>
 <body>
 
@@ -501,9 +501,137 @@
     </div>
   </section>
 
-  <!-- ════════ III · SOUNDTRACK ════════ -->
+  <!-- ════════ III · A MAP OF US ════════ -->
+  <section id="map" class="chapter map-section">
+    <div class="chapter-mark"><span class="chapter-num">III</span><span class="chapter-name">the distance</span></div>
+    <h2 class="section-heading">a map of us</h2>
+    <p class="map-caption">every city we've been together. click a pin.</p>
+
+    <div class="map-stage">
+      <svg class="map-canvas" viewBox="0 0 900 480" xmlns="http://www.w3.org/2000/svg" aria-label="map of our memories">
+        <!-- compass rose -->
+        <g class="map-compass" transform="translate(845 65)">
+          <circle r="22" fill="none" stroke="#cda866" stroke-width="0.8"/>
+          <circle r="13" fill="none" stroke="#cda866" stroke-width="0.6"/>
+          <path d="M 0 -22 L 4 0 L 0 22 L -4 0 Z" fill="#ab7f37" opacity="0.7"/>
+          <path d="M -22 0 L 0 4 L 22 0 L 0 -4 Z" fill="#cda866" opacity="0.55"/>
+          <text x="0" y="-26" text-anchor="middle" class="map-compass-letter">N</text>
+        </g>
+
+        <!-- thread connects NL east edge to Romania west edge - mostly straight -->
+        <path id="map-thread-path" class="map-thread"
+              d="M 252 160 Q 365 195 470 290"
+              stroke="#9c4456" stroke-width="1.4" fill="none"
+              stroke-dasharray="3 6" stroke-linecap="round" opacity="0.55"/>
+        <!-- invisible path slightly above the thread so the label sits just above the dashes -->
+        <path id="map-thread-label-path"
+              d="M 252 152 Q 365 187 470 282"
+              fill="none" stroke="none"/>
+        <text class="map-distance">
+          <textPath href="#map-thread-label-path" startOffset="50%" text-anchor="middle">
+            ≈ 2 100 km apart
+          </textPath>
+        </text>
+
+        <!-- Netherlands - real outline projected from lat/lon -->
+        <g class="map-country map-country--nl">
+          <path d="M 144.7 97.0 L 159.5 89.6 L 172.1 85.9 L 188.9 78.5 L 207.9 67.4 L 228.9 63.7 L 239.5 63.7 L 250.0 74.8 L 243.7 93.3 L 228.9 119.3 L 243.7 137.8 L 243.7 152.6 L 228.9 171.1 L 218.4 178.5 L 207.9 182.2 L 199.5 189.6 L 203.7 208.1 L 199.5 226.7 L 207.9 241.5 L 201.6 256.3 L 193.2 260.0 L 184.7 252.6 L 186.8 237.8 L 180.5 226.7 L 174.2 221.5 L 159.5 208.1 L 148.9 209.6 L 138.4 210.4 L 125.8 211.9 L 117.4 197.0 L 106.8 200.7 L 90.0 193.3 L 96.3 178.5 L 108.9 174.8 L 117.4 163.7 L 123.7 152.6 L 132.1 134.1 L 138.4 119.3 Z"
+                fill="#efe3d1" stroke="#a08d83" stroke-width="0.9"
+                stroke-linejoin="round"/>
+          <!-- Wadden Islands -->
+          <ellipse cx="148.9" cy="85.9" rx="3.6" ry="1.1" fill="#efe3d1" stroke="#a08d83" stroke-width="0.5"/>
+          <ellipse cx="161.6" cy="71.1" rx="4.0" ry="1.1" fill="#efe3d1" stroke="#a08d83" stroke-width="0.5"/>
+          <ellipse cx="174.2" cy="63.7" rx="4.4" ry="1.1" fill="#efe3d1" stroke="#a08d83" stroke-width="0.5"/>
+          <ellipse cx="188.9" cy="60.0" rx="4.0" ry="1.1" fill="#efe3d1" stroke="#a08d83" stroke-width="0.5"/>
+          <ellipse cx="207.9" cy="56.3" rx="3.2" ry="1.0" fill="#efe3d1" stroke="#a08d83" stroke-width="0.5"/>
+          <text x="170" y="286" class="map-country-label" text-anchor="middle">Netherlands</text>
+        </g>
+
+        <!-- Romania - real outline projected from lat/lon -->
+        <g class="map-country map-country--ro">
+          <path d="M 560.2 215.3 L 572.1 210.2 L 596.0 220.4 L 616.4 215.3 L 640.2 220.4 L 667.4 210.2 L 686.2 200.0 L 699.8 210.2 L 711.7 225.6 L 721.9 243.4 L 727.0 274.1 L 733.8 304.8 L 738.3 327.8 L 749.1 343.1 L 766.2 338.0 L 790.0 355.9 L 786.6 368.7 L 779.8 378.9 L 762.8 386.6 L 754.3 414.7 L 730.4 424.9 L 701.5 414.7 L 674.3 412.1 L 643.6 430.0 L 613.0 430.0 L 572.1 424.9 L 553.4 407.0 L 543.2 381.4 L 529.6 368.7 L 512.6 368.7 L 507.4 350.8 L 500.6 327.8 L 485.3 307.3 L 470.0 307.3 L 483.6 292.0 L 493.8 281.8 L 512.6 263.9 L 531.3 248.6 L 548.3 228.1 Z"
+                fill="#efe3d1" stroke="#a08d83" stroke-width="0.9"
+                stroke-linejoin="round"/>
+          <text x="630" y="455" class="map-country-label" text-anchor="middle">Romania</text>
+        </g>
+
+        <!-- Black Sea hint (east of Romania's Black Sea coast) -->
+        <text x="830" y="340" class="map-sea-label" text-anchor="middle">Black</text>
+        <text x="830" y="354" class="map-sea-label" text-anchor="middle">Sea</text>
+
+        <!-- North Sea hint (west of NL coast) -->
+        <text x="55" y="170" class="map-sea-label" text-anchor="middle">North</text>
+        <text x="55" y="184" class="map-sea-label" text-anchor="middle">Sea</text>
+
+        <!-- ─── pins (real geographic positions) ─────────────────────── -->
+        <!-- Amsterdam (4.90°E, 52.37°N) -->
+        <g class="map-pin" data-loc="amsterdam" transform="translate(153.2 140.0)">
+          <circle class="map-pin-halo" r="14"/>
+          <circle class="map-pin-dot"  r="5"/>
+          <circle class="map-pin-inner" r="1.8"/>
+          <text class="map-pin-label" x="0" y="-13" text-anchor="middle">Amsterdam</text>
+        </g>
+        <!-- The Hague (4.30°E, 52.08°N) -->
+        <g class="map-pin" data-loc="hague" transform="translate(127.9 161.5)">
+          <circle class="map-pin-halo" r="12"/>
+          <circle class="map-pin-dot"  r="4"/>
+          <circle class="map-pin-inner" r="1.4"/>
+          <text class="map-pin-label" x="-8" y="2" text-anchor="end">The Hague</text>
+        </g>
+        <!-- Rotterdam (4.48°E, 51.92°N) -->
+        <g class="map-pin" data-loc="rotterdam" transform="translate(135.5 173.3)">
+          <circle class="map-pin-halo" r="14"/>
+          <circle class="map-pin-dot"  r="5"/>
+          <circle class="map-pin-inner" r="1.8"/>
+          <text class="map-pin-label" x="-8" y="3" text-anchor="end">Rotterdam</text>
+        </g>
+        <!-- Utrecht (5.12°E, 52.09°N) -->
+        <g class="map-pin" data-loc="utrecht" transform="translate(162.4 160.7)">
+          <circle class="map-pin-halo" r="12"/>
+          <circle class="map-pin-dot"  r="4"/>
+          <circle class="map-pin-inner" r="1.4"/>
+          <text class="map-pin-label" x="9" y="3" text-anchor="start">Utrecht</text>
+        </g>
+
+        <!-- Brașov (25.61°E, 45.66°N) -->
+        <g class="map-pin" data-loc="brasov" transform="translate(650.8 332.4)">
+          <circle class="map-pin-halo" r="12"/>
+          <circle class="map-pin-dot"  r="4"/>
+          <circle class="map-pin-inner" r="1.4"/>
+          <text class="map-pin-label" x="0" y="-12" text-anchor="middle">Brașov</text>
+        </g>
+        <!-- Bucharest (26.10°E, 44.43°N) -->
+        <g class="map-pin" data-loc="bucharest" transform="translate(667.4 395.2)">
+          <circle class="map-pin-halo" r="17"/>
+          <circle class="map-pin-dot"  r="6"/>
+          <circle class="map-pin-inner" r="2"/>
+          <text class="map-pin-label map-pin-label--big" x="0" y="22" text-anchor="middle">Bucharest</text>
+        </g>
+        <!-- Craiova (23.80°E, 44.32°N) -->
+        <g class="map-pin" data-loc="craiova" transform="translate(589.1 400.9)">
+          <circle class="map-pin-halo" r="12"/>
+          <circle class="map-pin-dot"  r="4"/>
+          <circle class="map-pin-inner" r="1.4"/>
+          <text class="map-pin-label" x="0" y="20" text-anchor="middle">Craiova</text>
+        </g>
+      </svg>
+
+      <!-- memory panel - populated on pin click -->
+      <aside class="map-panel" id="map-panel" aria-live="polite">
+        <button class="map-panel-close" id="map-panel-close" aria-label="close">✕</button>
+        <span class="map-panel-eyebrow">a place</span>
+        <h3 class="map-panel-city" id="map-panel-city">somewhere we've been</h3>
+        <p class="map-panel-subtitle" id="map-panel-subtitle">pick a pin to remember it</p>
+        <p class="map-panel-blurb" id="map-panel-blurb">every dot on this map is a date with you.</p>
+        <p class="map-panel-count" id="map-panel-count"></p>
+        <ul class="map-panel-list" id="map-panel-list"></ul>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ════════ IV · SOUNDTRACK ════════ -->
   <section id="soundtrack" class="chapter soundtrack-section">
-    <div class="chapter-mark"><span class="chapter-num">III</span><span class="chapter-name">our soundtrack</span></div>
+    <div class="chapter-mark"><span class="chapter-num">IV</span><span class="chapter-name">our soundtrack</span></div>
     <h2 class="section-heading">three songs that are ours</h2>
 
     <div class="records">
@@ -559,9 +687,9 @@
     <p class="records-hint">click a record to spin it</p>
   </section>
 
-  <!-- ════════ IV · HALL OF FAME ════════ -->
+  <!-- ════════ V · HALL OF FAME ════════ -->
   <section id="hall-of-fame" class="chapter hof-section">
-    <div class="chapter-mark"><span class="chapter-num">IV</span><span class="chapter-name">hall of fame</span></div>
+    <div class="chapter-mark"><span class="chapter-num">V</span><span class="chapter-name">hall of fame</span></div>
     <h2 class="section-heading">my favourite photos of you</h2>
 
     <div class="hof-grid">
@@ -581,9 +709,9 @@
     </div>
   </section>
 
-  <!-- ════════ V · REASONS ════════ -->
+  <!-- ════════ VI · REASONS ════════ -->
   <section id="reasons" class="chapter reasons-section">
-    <div class="chapter-mark"><span class="chapter-num">V</span><span class="chapter-name">reasons</span></div>
+    <div class="chapter-mark"><span class="chapter-num">VI</span><span class="chapter-name">reasons</span></div>
     <h2 class="section-heading">why I love you</h2>
 
     <div class="reason-stage">
@@ -595,12 +723,103 @@
     </div>
   </section>
 
+  <!-- ════════ VII · THE NIGHT SKY ════════ -->
+  <section id="constellation" class="chapter constellation-section">
+    <div class="chapter-mark"><span class="chapter-num">VII</span><span class="chapter-name">the night sky</span></div>
+    <h2 class="section-heading">the sky we met under</h2>
+    <p class="constellation-caption">12 July 2025 · Bucharest · past 3 a.m.</p>
+
+    <div class="constellation-stage">
+      <svg id="constellation-chart-svg" class="constellation-chart" viewBox="0 0 600 440"
+           xmlns="http://www.w3.org/2000/svg" aria-label="night sky chart">
+        <defs>
+          <radialGradient id="sky-grad" cx="50%" cy="45%" r="60%">
+            <stop offset="0%"   stop-color="#22305c"/>
+            <stop offset="55%"  stop-color="#101a3e"/>
+            <stop offset="100%" stop-color="#060b22"/>
+          </radialGradient>
+          <radialGradient id="lit-star-glow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%"   stop-color="#fff2c8" stop-opacity="0.95"/>
+            <stop offset="45%"  stop-color="#f6d77a" stop-opacity="0.55"/>
+            <stop offset="100%" stop-color="#f6d77a" stop-opacity="0"/>
+          </radialGradient>
+          <filter id="star-bloom" x="-100%" y="-100%" width="300%" height="300%">
+            <feGaussianBlur stdDeviation="2.4"/>
+          </filter>
+        </defs>
+
+        <!-- chart background -->
+        <circle cx="300" cy="220" r="200" fill="url(#sky-grad)" stroke="#cda866" stroke-width="1.8"/>
+        <circle cx="300" cy="220" r="194" fill="none" stroke="#cda866" stroke-width="0.5"
+                stroke-dasharray="2 3" opacity="0.45"/>
+
+        <!-- ornamental corner flourishes -->
+        <g class="c-corners" stroke="#ab7f37" stroke-width="0.8" fill="none">
+          <path d="M 70 70 L 70 100 M 70 70 L 100 70"/>
+          <path d="M 530 70 L 530 100 M 530 70 L 500 70"/>
+          <path d="M 70 370 L 70 340 M 70 370 L 100 370"/>
+          <path d="M 530 370 L 530 340 M 530 370 L 500 370"/>
+        </g>
+
+        <!-- cardinals -->
+        <text x="300" y="12"  class="c-card" text-anchor="middle">N</text>
+        <text x="300" y="436" class="c-card" text-anchor="middle">S</text>
+        <text x="86"  y="226" class="c-card" text-anchor="middle">W</text>
+        <text x="514" y="226" class="c-card" text-anchor="middle">E</text>
+
+        <!-- chart title text inside frame, top arc -->
+        <text x="300" y="55" class="c-chart-title" text-anchor="middle">— sphæra australis · noctis xii julii ·</text>
+
+        <!-- atmospheric stars + named stars (generated by JS) -->
+        <g id="constellation-stars-bg"></g>
+
+        <!-- lines connecting puzzle stars (drawn by JS) -->
+        <g id="constellation-lines"></g>
+
+        <!-- puzzle stars (generated by JS) -->
+        <g id="constellation-stars"></g>
+      </svg>
+
+      <p class="constellation-hint" id="constellation-hint">
+        <span class="constellation-hint-text">one star pulses softly — start there, then trace.</span>
+      </p>
+
+      <div class="constellation-reveal" id="constellation-reveal" aria-hidden="true">
+        <span class="constellation-reveal-script">Ana</span>
+        <p class="constellation-reveal-desc">
+          a new constellation, by D. —<br>
+          visible only over Bucharest, only that night.
+        </p>
+      </div>
+    </div>
+  </section>
+
   <!-- ════════ FOOTER ════════ -->
   <footer class="footer">
     <p class="footer-script">see you very soon, my love</p>
     <p class="footer-main">made with ♥ by David, for Ana</p>
     <p class="footer-sub">May 2026</p>
   </footer>
+
+  <!-- ════════ APOLOGY VIDEO MODAL (opened from hero "I'm sorry" click) ════════ -->
+  <div class="apology-overlay" id="apology-overlay"></div>
+  <div class="apology-wrap" id="apology-wrap">
+    <div class="apology-modal" id="apology-modal" role="dialog" aria-modal="true">
+      <button class="apology-modal-close" id="apology-modal-close" aria-label="close">✕</button>
+      <video id="apology-video" controls playsinline preload="metadata">
+        <source src="audio/im-sorry.mp4" type="video/mp4">
+      </video>
+    </div>
+  </div>
+
+  <!-- ════════ MEMORY MODAL (opened from map panel clicks) ════════ -->
+  <div class="memory-overlay" id="memory-overlay"></div>
+  <div class="memory-wrap" id="memory-wrap">
+    <div class="memory-modal" id="memory-modal" role="dialog" aria-modal="true" aria-hidden="true">
+      <button class="memory-modal-close" id="memory-modal-close" aria-label="close">✕</button>
+      <div class="memory-modal-content" id="memory-modal-content"></div>
+    </div>
+  </div>
 
   <!-- ════════ SECRET MODAL ════════ -->
   <div class="modal-overlay" id="modal-overlay"></div>
@@ -619,6 +838,10 @@
   <script src="js/countdown.js"></script>
   <script src="js/cursor.js"></script>
   <script src="js/easter-eggs.js"></script>
+  <script src="js/cat.js"></script>
+  <script src="js/map.js"></script>
+  <script src="js/constellation.js"></script>
+  <script src="js/apology.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>
