@@ -1,0 +1,493 @@
+/* ────────────────────────────────────────────────────────────
+   the desk · proof of concept
+   isolated stylesheet — does not affect index.html / style.css
+   ──────────────────────────────────────────────────────────── */
+
+:root {
+  --ivory:     #f3e8d4;
+  --ivory-2:   #f8f1e3;
+  --paper:     #efe3d1;
+  --wine:      #6f1f2d;
+  --wine-2:    #9c4456;
+  --gold:      #cda866;
+  --gold-2:    #ab7f37;
+  --ink:       #3d2820;
+  --wood:      #7d5a35;
+  --wood-dark: #5a3e1c;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  scroll-behavior: smooth;
+  background: #6a4a25; /* wood fallback behind everything */
+  overflow-x: hidden;
+}
+
+body {
+  font-family: 'Outfit', system-ui, sans-serif;
+  background: #6a4a25; /* wood — so any subpixel gap on the pinned desk blends invisibly */
+  color: var(--ink);
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* grain overlay */
+#grain {
+  position: fixed; inset: 0;
+  pointer-events: none;
+  z-index: 200;
+  opacity: 0.08;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.6'/></svg>");
+}
+
+/* ───── intro ───── */
+
+#intro,
+.hero {
+  background: var(--ivory);
+}
+
+#intro {
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 4rem 2rem;
+}
+
+.intro-eyebrow {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--gold-2);
+  margin-bottom: 1.6rem;
+}
+
+.intro-title {
+  font-family: 'Fraunces', serif;
+  font-weight: 400;
+  font-size: clamp(3rem, 8vw, 6rem);
+  color: var(--ink);
+  margin-bottom: 1rem;
+}
+.intro-title em { font-style: italic; color: var(--wine); }
+
+.intro-sub {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  color: var(--wine);
+  font-size: 1.1rem;
+  margin-bottom: 3rem;
+}
+
+.intro-arrow {
+  font-size: 1.6rem;
+  color: var(--gold-2);
+  animation: bounce 2.4s ease-in-out infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); opacity: 0.55; }
+  50%      { transform: translateY(8px); opacity: 1; }
+}
+
+/* ───── desk stage ───── */
+
+#desk-stage {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  /* same vertical gradient as the SVG's wood-base, so letterbox bars on the
+     sides flow seamlessly into the desk */
+  background: linear-gradient(to bottom, #a47b4e 0%, #8a6539 55%, #6a4a25 100%);
+}
+
+.stage-frame {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: inherit;
+}
+
+/* ───── proxy letter ───── */
+
+.proxy-letter {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: clamp(360px, 42vw, 520px);
+  padding: clamp(1.8rem, 3.2vw, 3rem) clamp(1.6rem, 3.2vw, 2.6rem);
+  background: var(--ivory-2);
+  color: var(--ink);
+  font-family: 'Fraunces', serif;
+  text-align: left;
+  border: 1px solid #c2a987;
+  box-shadow: 0 22px 60px rgba(50, 25, 5, 0.45),
+              0 6px 18px rgba(50, 25, 5, 0.25);
+  z-index: 30;
+  transform: translate(-50%, -50%);
+  transform-origin: 50% 50%;
+  will-change: transform;
+  pointer-events: none;
+}
+
+.proxy-letter::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='1'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.4'/></svg>");
+  opacity: 0.05;
+  pointer-events: none;
+}
+
+.proxy-salutation {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-weight: 500;
+  font-size: 1.35rem;
+  margin-bottom: 1rem;
+  color: var(--wine);
+}
+
+.proxy-letter p {
+  font-size: 1rem;
+  line-height: 1.65;
+  margin-bottom: 0.6rem;
+}
+
+.proxy-sign {
+  margin-top: 1.4rem;
+  font-style: italic;
+  color: var(--wine-2);
+}
+
+.proxy-seal {
+  position: absolute;
+  right: -16px; bottom: -16px;
+  width: 54px; height: 54px;
+  background: var(--wine);
+  border-radius: 50%;
+  box-shadow: 0 4px 12px rgba(30, 10, 0, 0.45);
+  display: flex; align-items: center; justify-content: center;
+  color: #f4d28a;
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-size: 1rem;
+  transform: rotate(-12deg);
+}
+.proxy-seal span { display: block; }
+
+/* ───── proxy folded note (replaces the open letter at end of zoom) ───── */
+
+.proxy-folded {
+  position: absolute;
+  top: 50%; left: 50%;
+  width: clamp(220px, 26vw, 320px);
+  aspect-ratio: 1.8 / 1;
+  background: #e8d9b8;
+  border: 1px solid #8e6940;
+  box-shadow: 0 20px 50px rgba(50, 25, 5, 0.4),
+              0 6px 16px rgba(50, 25, 5, 0.22);
+  z-index: 30;
+  transform: translate(-50%, -50%);
+  transform-origin: 50% 50%;
+  opacity: 0;
+  will-change: transform, opacity, filter;
+  overflow: visible;
+  cursor: pointer;
+  transition: filter 220ms ease;
+}
+.proxy-folded:hover {
+  filter: brightness(1.05) drop-shadow(0 6px 12px rgba(50, 25, 5, 0.35));
+}
+
+.folded-flap {
+  position: absolute;
+  top: -1px; left: -1px; right: -1px;
+  height: 63%;
+  background: #d9c79e;
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  border-bottom: 1px solid rgba(142, 105, 64, 0.5);
+}
+
+.folded-seal {
+  position: absolute;
+  top: 53%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 17%;
+  aspect-ratio: 1 / 1;
+  background: var(--wine);
+  border: 1px solid #4d121d;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: #f4d28a;
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-size: clamp(0.8rem, 1.4vw, 1.05rem);
+  box-shadow: 0 4px 10px rgba(30, 10, 0, 0.4);
+}
+.folded-seal span { display: block; line-height: 1; }
+
+/* the small "love letter" caption that sits just below the sealed envelope */
+.proxy-folded-label {
+  position: absolute;
+  top: calc(50% + clamp(78px, 8.8vw, 112px));
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 30;
+  pointer-events: none;
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-size: clamp(0.85rem, 1.1vw, 1rem);
+  color: var(--ivory);
+  letter-spacing: 0.04em;
+  opacity: 0;
+  white-space: nowrap;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.55);
+  transition: opacity 220ms ease;
+}
+.proxy-folded:hover + .proxy-folded-label { opacity: 1; }
+
+/* ───── desk SVG ───── */
+
+.desk-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  z-index: 10;
+  display: block;
+}
+
+.desk-item {
+  cursor: pointer;
+  pointer-events: auto;
+}
+
+.desk-item-label {
+  opacity: 0;
+  transition: opacity 220ms ease;
+  pointer-events: none;
+  paint-order: stroke;
+  stroke: rgba(20, 12, 4, 0.7);
+  stroke-width: 3;
+  stroke-linejoin: round;
+}
+
+.desk-item:hover .desk-item-label { opacity: 1; }
+
+.deco-secret-star {
+  transition: opacity 200ms;
+  cursor: pointer;
+}
+.deco-secret-star:hover { opacity: 1 !important; }
+
+/* hint */
+.desk-hint {
+  position: absolute;
+  left: 50%; bottom: 2rem;
+  transform: translateX(-50%);
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-size: 0.9rem;
+  color: var(--ivory);
+  opacity: 0;
+  z-index: 40;
+  pointer-events: none;
+  letter-spacing: 0.04em;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+}
+
+/* ───── chapter overlays ───── */
+
+.chapter-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  background: var(--ivory);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 380ms cubic-bezier(0.22, 0.61, 0.36, 1);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.chapter-overlay.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.overlay-close {
+  position: fixed;
+  top: 1.5rem; left: 1.5rem;
+  z-index: 510;
+  background: rgba(243, 232, 212, 0.85);
+  backdrop-filter: blur(6px);
+  border: 1px solid #c2a987;
+  border-radius: 999px;
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-size: 0.9rem;
+  color: var(--wine);
+  cursor: pointer;
+  letter-spacing: 0.04em;
+  transition: opacity 200ms, transform 200ms, background 200ms;
+  padding: 0.45rem 1rem;
+}
+
+.chapter-overlay:not(.open) .overlay-close { display: none; }
+
+/* sections from style.css set their own bg (--paper / --paper-2) that's
+   slightly different from the overlay's ivory. when the content is shorter
+   than the viewport, the overlay's lighter ivory shows below the section
+   as a band. forcing the section to at least fill the viewport removes it. */
+.chapter-overlay .chapter {
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+/* hide the X on the memory modal — closing happens via click-outside */
+.memory-modal-close { display: none !important; }
+
+/* push the soundtrack records down a bit so they sit lower in the overlay */
+.chapter-overlay #soundtrack .records {
+  margin-top: 4rem;
+}
+.overlay-close:hover { color: var(--ink); transform: translateX(-3px); }
+
+.overlay-card {
+  text-align: center;
+  max-width: 520px;
+  padding: 3rem 2rem;
+}
+
+.overlay-num {
+  display: block;
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-size: 2.4rem;
+  color: var(--gold-2);
+  margin-bottom: 0.5rem;
+  letter-spacing: 0.1em;
+}
+
+.overlay-card h2 {
+  font-family: 'Fraunces', serif;
+  font-weight: 500;
+  font-style: italic;
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  color: var(--wine);
+  margin-bottom: 1.4rem;
+}
+
+.overlay-card p {
+  font-family: 'Fraunces', serif;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--ink);
+  margin-bottom: 0.8rem;
+}
+
+.overlay-meta {
+  font-style: italic !important;
+  color: #a08560 !important;
+  font-size: 0.85rem !important;
+  margin-top: 1.5rem !important;
+}
+
+.emergency-card .overlay-num { color: var(--wine); }
+
+/* ───── capsule (for later) locked notice ───── */
+
+.capsule-overlay {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.capsule-overlay.open { display: flex; }
+
+.capsule-locked {
+  max-width: 420px;
+  width: 88%;
+  text-align: center;
+  padding: 2.4rem 1.6rem;
+  background: var(--paper, #efe3d1);
+  border: 1px solid #c2a987;
+  border-radius: 8px;
+  box-shadow: 0 24px 60px rgba(50, 25, 5, 0.18);
+  position: relative;
+}
+.capsule-locked::before {
+  content: '';
+  position: absolute;
+  inset: 6px;
+  border: 1px solid rgba(171, 127, 55, 0.25);
+  border-radius: 4px;
+  pointer-events: none;
+}
+
+.capsule-lock-svg {
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 1.2rem;
+  display: block;
+}
+
+.capsule-eyebrow {
+  font-family: 'Outfit', sans-serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.36em;
+  text-transform: uppercase;
+  color: var(--gold-2);
+  margin-bottom: 0.6rem;
+}
+
+.capsule-title {
+  font-family: 'Fraunces', serif;
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(1.6rem, 3vw, 2.1rem);
+  color: var(--wine);
+  margin-bottom: 1.4rem;
+}
+
+.capsule-msg {
+  font-family: 'Fraunces', serif;
+  font-size: 1rem;
+  color: var(--ink);
+  margin-bottom: 0.3rem;
+}
+
+.capsule-date {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: clamp(1.2rem, 2.4vw, 1.5rem);
+  color: var(--ink);
+  margin-bottom: 0.6rem;
+  letter-spacing: 0.02em;
+}
+
+.capsule-sub {
+  font-family: 'Caveat', cursive;
+  font-size: 1.15rem;
+  color: var(--wine-2);
+  margin: 0;
+}
+
+/* ───── mobile ───── */
+
+@media (max-width: 768px) {
+  .intro-title { font-size: 3rem; }
+  .proxy-letter { width: 78vw; padding: 1.4rem 1.2rem; }
+  .proxy-letter p { font-size: 0.9rem; }
+  .proxy-salutation { font-size: 1.15rem; }
+  .desk-hint { font-size: 0.78rem; bottom: 1rem; }
+}
+
+@media (max-width: 480px) {
+  .desk-hint { font-size: 0.72rem; }
+  .overlay-card h2 { font-size: 1.8rem; }
+}

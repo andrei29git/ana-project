@@ -66,7 +66,7 @@
     const i = petalAt(e.clientX, e.clientY);
     if (i !== -1) {
       petals.splice(i, 1);
-      if (window.openApology) window.openApology(e);
+      if (window.showNoSecret) window.showNoSecret(e);
     }
   }, true); // capture phase - fires before other handlers
 

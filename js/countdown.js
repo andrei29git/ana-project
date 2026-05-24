@@ -60,7 +60,7 @@
 
     if (clickCount >= 3) {
       clickCount = 0;
-      if (window.openApology) window.openApology(lastEvent);
+      if (window.showNoSecret) window.showNoSecret(lastEvent);
       return;
     }
     clickTimer = setTimeout(() => { clickCount = 0; }, 600);
