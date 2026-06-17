@@ -71,6 +71,9 @@
         { date: 'April 11, 2026',        title: 'flowers for my cutiepie' },
         { date: 'April 18, 2026',        title: "mcdonald's at 2 a.m." },
         { date: 'May 9, 2026',           title: 'you and pankina' },
+        { date: 'June 1, 2026',          title: 'ten months' },
+        { date: 'June 3, 2026',          title: 'my cutiepie' },
+        { date: 'June 11, 2026',         title: 'bath time, again' },
       ],
     },
     craiova: {
@@ -165,9 +168,9 @@
             .toLowerCase();
   }
 
-  function findTimelineCardByDate(dateStr) {
+  function findCardInDoc(doc, dateStr) {
     const target = normalizeDate(dateStr);
-    const dates = document.querySelectorAll('.tl-date');
+    const dates = doc.querySelectorAll('.tl-date');
     for (const d of dates) {
       if (normalizeDate(d.textContent) === target) {
         return d.closest('.tl-card');
@@ -176,11 +179,31 @@
     return null;
   }
 
-  function openMemoryModal(dateStr) {
-    const card = findTimelineCardByDate(dateStr);
+  // The timeline cards live on timeline.html, not here. Fetch that page once
+  // and cache its parsed DOM so memory clicks can pull the matching card.
+  let timelineDocPromise = null;
+  function loadTimelineDoc() {
+    if (!timelineDocPromise) {
+      timelineDocPromise = fetch('timeline.html')
+        .then(r => r.text())
+        .then(html => new DOMParser().parseFromString(html, 'text/html'))
+        .catch(() => null);
+    }
+    return timelineDocPromise;
+  }
+  // warm the cache so the first memory click feels instant
+  loadTimelineDoc();
+
+  async function openMemoryModal(dateStr) {
+    // try the current page first (timeline page), then the fetched timeline
+    let card = findCardInDoc(document, dateStr);
+    if (!card) {
+      const doc = await loadTimelineDoc();
+      if (doc) card = findCardInDoc(doc, dateStr);
+    }
     if (!card) return;
 
-    const clone = card.cloneNode(true);
+    const clone = document.importNode(card, true);
     // wire cloned videos with the same click-to-play + sound behavior as the timeline
     clone.querySelectorAll('video').forEach(v => {
       v.removeAttribute('autoplay');
@@ -223,6 +246,10 @@
 
   memoryClose.addEventListener('click', closeMemoryModal);
   memoryOverlay.addEventListener('click', closeMemoryModal);
+  // click anywhere outside the modal card (on the wrap backdrop) also closes
+  memoryWrap.addEventListener('click', (e) => {
+    if (e.target === memoryWrap) closeMemoryModal();
+  });
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && memoryWrap.classList.contains('open')) {
       closeMemoryModal();

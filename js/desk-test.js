@@ -54,6 +54,21 @@ tl.to(letterEl, { scale: 0.42, ease: 'power2.inOut', duration: 1.2 }, 0)
   // linger: empty tween extends timeline so desk stays revealed before pin releases
   .to({}, { duration: 0.8 });
 
+// ───── arriving back from a feature page (#desk) ─────
+// land directly on the fully-revealed desk instead of the top hero/clock.
+if (window.location.hash === '#desk') {
+  const jumpToDesk = () => {
+    ScrollTrigger.refresh();
+    const st = tl.scrollTrigger;
+    if (st) window.scrollTo({ top: st.end, behavior: 'auto' });
+  };
+  if (document.readyState === 'complete') {
+    jumpToDesk();
+  } else {
+    window.addEventListener('load', jumpToDesk);
+  }
+}
+
 // ───── hover lift on each item ─────
 items.forEach(item => {
   item.addEventListener('mouseenter', () => {
@@ -72,130 +87,18 @@ items.forEach(item => {
       overwrite: 'auto',
     });
   });
-  item.addEventListener('click', () => openOverlay(item.dataset.chapter));
-});
-
-// ───── overlays ─────
-
-// Lock page scroll without touching position — position: fixed confuses
-// ScrollTrigger and resets the pinned desk animation. overflow: hidden on
-// both html and body, plus overscroll-behavior: contain on the overlay,
-// is enough to keep the page underneath frozen.
-function lockBodyScroll() {
-  document.documentElement.style.overflow = 'hidden';
-  document.body.style.overflow = 'hidden';
-}
-
-function unlockBodyScroll() {
-  document.documentElement.style.overflow = '';
-  document.body.style.overflow = '';
-}
-
-function openOverlay(chapter) {
-  const overlay = document.querySelector(`#overlay-${chapter}`);
-  if (!overlay) return;
-
-  // Inside fixed overlays, ScrollTriggers never fire from window scroll, so
-  // gsap.from animations leave elements stuck in their "from" state.
-  // Forcing each animation to progress(1) cleanly resolves them to their
-  // natural state — including SVG attribute transforms (map pins, etc.)
-  // which clearProps would otherwise destroy.
-  ScrollTrigger.getAll().forEach(st => {
-    if (st.trigger && overlay.contains(st.trigger)) {
-      st.animation.progress(1);
-    }
+  item.addEventListener('click', () => {
+    window.location.href = `${item.dataset.chapter}.html`;
   });
-
-  overlay.classList.add('open');
-  overlay.scrollTop = 0;
-  lockBodyScroll();
-}
-
-function closeAllOverlays() {
-  document.querySelectorAll('.chapter-overlay.open')
-    .forEach(o => o.classList.remove('open'));
-
-  // The map panel uses pointer-events: auto when .map-panel--open, which
-  // *overrides* the parent chapter-overlay's pointer-events: none. Without
-  // explicitly resetting it, the invisible panel + its memory LIs keep
-  // capturing clicks across the desk after the map is closed.
-  const mapPanel = document.getElementById('map-panel');
-  if (mapPanel) mapPanel.classList.remove('map-panel--open');
-
-  const mapList = document.getElementById('map-panel-list');
-  if (mapList) mapList.innerHTML = '';
-
-  document.querySelectorAll('.map-pin--active')
-    .forEach(p => p.classList.remove('map-pin--active'));
-
-  // Forcefully kill any nested modal (memory modal from map, secret modal).
-  const killModal = (el) => {
-    if (!el) return;
-    el.classList.remove('open');
-    el.style.opacity = '0';
-    el.style.pointerEvents = 'none';
-  };
-  killModal(document.getElementById('memory-overlay'));
-  killModal(document.getElementById('memory-wrap'));
-  killModal(document.getElementById('modal-overlay'));
-  killModal(document.getElementById('secret-modal'));
-
-  const memModal = document.getElementById('memory-modal');
-  if (memModal) memModal.setAttribute('aria-hidden', 'true');
-
-  const memContent = document.getElementById('memory-modal-content');
-  if (memContent) {
-    memContent.querySelectorAll('video').forEach(v => v.pause());
-    memContent.innerHTML = '';
-  }
-
-  document.querySelectorAll('.chapter-overlay video').forEach(v => v.pause());
-  unlockBodyScroll();
-
-  setTimeout(() => {
-    ['memory-overlay', 'memory-wrap', 'modal-overlay', 'secret-modal'].forEach(id => {
-      const el = document.getElementById(id);
-      if (el) { el.style.opacity = ''; el.style.pointerEvents = ''; }
-    });
-  }, 450);
-}
-
-document.querySelectorAll('.overlay-close')
-  .forEach(btn => btn.addEventListener('click', closeAllOverlays));
-
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') closeAllOverlays();
 });
 
-// clicking the overlay background (not the card) also closes
-document.querySelectorAll('.chapter-overlay').forEach(o => {
-  o.addEventListener('click', e => { if (e.target === o) closeAllOverlays(); });
-});
-
-// sealed envelope on the desk opens the letter overlay when clicked.
-// guard against opening while it's mid-fade-in during the pull-back scrub.
+// ───── navigation ─────
+// Each desk item now navigates to its own page (handled in the click
+// handler above). The sealed envelope opens the letter page.
+// guard against navigating while it's mid-fade-in during the pull-back scrub.
 if (folded) {
   folded.addEventListener('click', () => {
     if (parseFloat(getComputedStyle(folded).opacity) < 0.5) return;
-    openOverlay('letter');
-  });
-}
-
-// memory modal — click anywhere outside the modal card to close.
-// map.js only wires this on memory-overlay (which sits behind memory-wrap and
-// is therefore unreachable). We add it to memory-wrap directly.
-const memWrap = document.getElementById('memory-wrap');
-if (memWrap) {
-  memWrap.addEventListener('click', (e) => {
-    if (e.target !== memWrap) return;
-    memWrap.classList.remove('open');
-    document.getElementById('memory-overlay')?.classList.remove('open');
-    document.getElementById('memory-modal')?.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
-    const memContent = document.getElementById('memory-modal-content');
-    if (memContent) {
-      memContent.querySelectorAll('video').forEach(v => v.pause());
-      setTimeout(() => { memContent.innerHTML = ''; }, 350);
-    }
+    window.location.href = 'letter.html';
   });
 }

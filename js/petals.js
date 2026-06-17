@@ -66,7 +66,8 @@
     const i = petalAt(e.clientX, e.clientY);
     if (i !== -1) {
       petals.splice(i, 1);
-      if (window.showNoSecret) window.showNoSecret(e);
+      // the deep-wine petal is a secret trigger → opens the games page
+      window.location.href = 'games.html';
     }
   }, true); // capture phase - fires before other handlers
 

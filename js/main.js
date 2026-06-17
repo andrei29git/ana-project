@@ -31,15 +31,19 @@ function showReason(i) {
   reasonNum.textContent  = `no. ${i + 1}`;
   reasonText.textContent = REASONS[i];
 }
-showReason(0);
 
-reasonBtn.addEventListener('click', () => {
-  reasonCard.classList.remove('shuffling');
-  void reasonCard.offsetWidth;
-  reasonCard.classList.add('shuffling');
-  reasonIndex = (reasonIndex + 1) % REASONS.length;
-  setTimeout(() => showReason(reasonIndex), 210);
-});
+// only wire the reasons card on the page that actually has it
+if (reasonCard && reasonText && reasonNum && reasonBtn) {
+  showReason(0);
+
+  reasonBtn.addEventListener('click', () => {
+    reasonCard.classList.remove('shuffling');
+    void reasonCard.offsetWidth;
+    reasonCard.classList.add('shuffling');
+    reasonIndex = (reasonIndex + 1) % REASONS.length;
+    setTimeout(() => showReason(reasonIndex), 210);
+  });
+}
 
 /* ─── Records - click to play the song + spin the disc ────────────── */
 // DAVID: put your three mp3 files in the "audio" folder next to index.html,
@@ -138,6 +142,7 @@ records.forEach(rec => {
   const overlay = document.getElementById('karaoke-overlay');
   const karaokeVideo = document.getElementById('karaoke-video');
   const closeBtn = document.getElementById('karaoke-close');
+  if (!flashingRec || !flashingAudio || !overlay || !karaokeVideo || !closeBtn) return;
   let triggered = false;
   let preloaded = false;
 
@@ -158,7 +163,7 @@ records.forEach(rec => {
   });
 
   flashingAudio.addEventListener('timeupdate', () => {
-    if (!triggered && flashingAudio.currentTime >= 42) {
+    if (!triggered && flashingAudio.currentTime >= 41.65) {
       triggered = true;
       // scroll the Flashing Lights record into view so the popup is visible
       document.getElementById('flashing-set').scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -174,12 +179,12 @@ records.forEach(rec => {
     }
   });
 
-  // reset if the record is paused/restarted before 0:42
+  // reset if the record is paused/restarted before the trigger point
   flashingAudio.addEventListener('pause', () => {
-    if (flashingAudio.currentTime < 42) triggered = false;
+    if (flashingAudio.currentTime < 41.65) triggered = false;
   });
   flashingAudio.addEventListener('seeked', () => {
-    if (flashingAudio.currentTime < 42) {
+    if (flashingAudio.currentTime < 41.65) {
       triggered = false;
       overlay.classList.remove('visible');
       karaokeVideo.pause();
@@ -204,6 +209,8 @@ gsap.set('.hero-tagline',    { y: 14 });
 gsap.set('.countdown-block', { y: 20 });
 
 window.addEventListener('load', () => {
+  // hero only exists on the landing page
+  if (!document.getElementById('typed-text')) return;
   const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
   tl.to('.hero-eyebrow',   { opacity: 1, duration: 0.9 }, 0.4)
     .to('.hero-for',        { opacity: 1, y: 0, duration: 0.7 }, '-=0.3')
@@ -243,16 +250,18 @@ gsap.from('.letter-paper', {
 const thread = document.querySelector('.tl-thread');
 
 // the spine fills as you scroll through the thread
-gsap.to('#tl-spine-fill', {
-  height: '100%',
-  ease: 'none',
-  scrollTrigger: {
-    trigger: thread,
-    start: 'top 55%',
-    end: 'bottom 70%',
-    scrub: 0.6,
-  },
-});
+if (thread) {
+  gsap.to('#tl-spine-fill', {
+    height: '100%',
+    ease: 'none',
+    scrollTrigger: {
+      trigger: thread,
+      start: 'top 55%',
+      end: 'bottom 70%',
+      scrub: 0.6,
+    },
+  });
+}
 
 // auto-alternate sides so inserting an event never needs hand-editing
 gsap.utils.toArray('.tl-item:not(.tl-end)').forEach((item, i) => {

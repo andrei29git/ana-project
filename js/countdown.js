@@ -2,9 +2,9 @@
 
 (function () {
   // Date shown to Ana (the decoy)
-  const SHOWN_DATE = new Date('2026-05-28T01:00:00');
+  const SHOWN_DATE = new Date('2026-07-05T01:00:00');
   // Real date (revealed by easter egg)
-  const REAL_DATE  = new Date('2026-05-28T01:00:00');
+  const REAL_DATE  = new Date('2026-07-05T01:00:00');
 
   const els = {
     days:  document.getElementById('days-val'),
@@ -60,7 +60,8 @@
 
     if (clickCount >= 3) {
       clickCount = 0;
-      if (window.showNoSecret) window.showNoSecret(lastEvent);
+      // triple-click is a secret trigger → opens the games page
+      window.location.href = 'games.html';
       return;
     }
     clickTimer = setTimeout(() => { clickCount = 0; }, 600);

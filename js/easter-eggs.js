@@ -32,7 +32,8 @@ window.showNoSecret = function (e) {
 };
 
 (function () {
-  document.getElementById('secret-star').addEventListener('click', (e) => {
-    window.showNoSecret(e);
-  });
+  const star = document.getElementById('secret-star');
+  if (!star) return;
+  // the hidden star is one of the secret triggers → opens the games page
+  star.addEventListener('click', () => { window.location.href = 'games.html'; });
 })();

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>a map of us · for Ana</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><path d=%22M92,20 C87,10 73,4 63,10 L50,20 L37,10 C27,4 13,10 8,20 C2,32 5,47 13,57 L50,90 L87,57 C95,47 98,32 92,20Z%22 fill=%22%23c0392b%22/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Outfit:wght@300;400;500&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=11">
+  <link rel="stylesheet" href="css/desk-test.css?v=18">
+</head>
+<body class="page">
+
+  <canvas id="petal-canvas"></canvas>
+  <div id="grain"></div>
+  <div id="sparkle-container"></div>
+
+  <div class="chapter-overlay open" id="overlay-map">
+    <a class="overlay-close" href="index.html#desk">&larr; back to the desk</a>
+    <section id="map" class="chapter map-section">
+      <h2 class="section-heading">a map of us</h2>
+      <p class="map-caption">every city we've been together. click a pin.</p>
+
+      <div class="map-stage">
+        <svg class="map-canvas" viewBox="0 0 900 480" xmlns="http://www.w3.org/2000/svg" aria-label="map of our memories">
+          <g class="map-compass" transform="translate(845 65)">
+            <circle r="22" fill="none" stroke="#cda866" stroke-width="0.8"/>
+            <circle r="13" fill="none" stroke="#cda866" stroke-width="0.6"/>
+            <path d="M 0 -22 L 4 0 L 0 22 L -4 0 Z" fill="#ab7f37" opacity="0.7"/>
+            <path d="M -22 0 L 0 4 L 22 0 L 0 -4 Z" fill="#cda866" opacity="0.55"/>
+            <text x="0" y="-26" text-anchor="middle" class="map-compass-letter">N</text>
+          </g>
+
+          <path id="map-thread-path" class="map-thread"
+                d="M 252 160 Q 365 195 470 290"
+                stroke="#9c4456" stroke-width="1.4" fill="none"
+                stroke-dasharray="3 6" stroke-linecap="round" opacity="0.55"/>
+          <path id="map-thread-label-path"
+                d="M 252 152 Q 365 187 470 282"
+                fill="none" stroke="none"/>
+          <text class="map-distance">
+            <textPath href="#map-thread-label-path" startOffset="50%" text-anchor="middle">
+              ≈ 2 100 km apart
+            </textPath>
+          </text>
+
+          <g class="map-country map-country--nl">
+            <path d="M 144.7 97.0 L 159.5 89.6 L 172.1 85.9 L 188.9 78.5 L 207.9 67.4 L 228.9 63.7 L 239.5 63.7 L 250.0 74.8 L 243.7 93.3 L 228.9 119.3 L 243.7 137.8 L 243.7 152.6 L 228.9 171.1 L 218.4 178.5 L 207.9 182.2 L 199.5 189.6 L 203.7 208.1 L 199.5 226.7 L 207.9 241.5 L 201.6 256.3 L 193.2 260.0 L 184.7 252.6 L 186.8 237.8 L 180.5 226.7 L 174.2 221.5 L 159.5 208.1 L 148.9 209.6 L 138.4 210.4 L 125.8 211.9 L 117.4 197.0 L 106.8 200.7 L 90.0 193.3 L 96.3 178.5 L 108.9 174.8 L 117.4 163.7 L 123.7 152.6 L 132.1 134.1 L 138.4 119.3 Z"
+                  fill="#efe3d1" stroke="#a08d83" stroke-width="0.9"
+                  stroke-linejoin="round"/>
+            <ellipse cx="148.9" cy="85.9" rx="3.6" ry="1.1" fill="#efe3d1" stroke="#a08d83" stroke-width="0.5"/>
+            <ellipse cx="161.6" cy="71.1" rx="4.0" ry="1.1" fill="#efe3d1" stroke="#a08d83" stroke-width="0.5"/>
+            <ellipse cx="174.2" cy="63.7" rx="4.4" ry="1.1" fill="#efe3d1" stroke="#a08d83" stroke-width="0.5"/>
+            <ellipse cx="188.9" cy="60.0" rx="4.0" ry="1.1" fill="#efe3d1" stroke="#a08d83" stroke-width="0.5"/>
+            <ellipse cx="207.9" cy="56.3" rx="3.2" ry="1.0" fill="#efe3d1" stroke="#a08d83" stroke-width="0.5"/>
+            <text x="170" y="286" class="map-country-label" text-anchor="middle">Netherlands</text>
+          </g>
+
+          <g class="map-country map-country--ro">
+            <path d="M 560.2 215.3 L 572.1 210.2 L 596.0 220.4 L 616.4 215.3 L 640.2 220.4 L 667.4 210.2 L 686.2 200.0 L 699.8 210.2 L 711.7 225.6 L 721.9 243.4 L 727.0 274.1 L 733.8 304.8 L 738.3 327.8 L 749.1 343.1 L 766.2 338.0 L 790.0 355.9 L 786.6 368.7 L 779.8 378.9 L 762.8 386.6 L 754.3 414.7 L 730.4 424.9 L 701.5 414.7 L 674.3 412.1 L 643.6 430.0 L 613.0 430.0 L 572.1 424.9 L 553.4 407.0 L 543.2 381.4 L 529.6 368.7 L 512.6 368.7 L 507.4 350.8 L 500.6 327.8 L 485.3 307.3 L 470.0 307.3 L 483.6 292.0 L 493.8 281.8 L 512.6 263.9 L 531.3 248.6 L 548.3 228.1 Z"
+                  fill="#efe3d1" stroke="#a08d83" stroke-width="0.9"
+                  stroke-linejoin="round"/>
+            <text x="630" y="455" class="map-country-label" text-anchor="middle">Romania</text>
+          </g>
+
+          <text x="830" y="340" class="map-sea-label" text-anchor="middle">Black</text>
+          <text x="830" y="354" class="map-sea-label" text-anchor="middle">Sea</text>
+          <text x="55" y="170" class="map-sea-label" text-anchor="middle">North</text>
+          <text x="55" y="184" class="map-sea-label" text-anchor="middle">Sea</text>
+
+          <g class="map-pin" data-loc="amsterdam" transform="translate(153.2 140.0)">
+            <circle class="map-pin-halo" r="14"/>
+            <circle class="map-pin-dot"  r="5"/>
+            <circle class="map-pin-inner" r="1.8"/>
+            <text class="map-pin-label" x="0" y="-13" text-anchor="middle">Amsterdam</text>
+          </g>
+          <g class="map-pin" data-loc="hague" transform="translate(127.9 161.5)">
+            <circle class="map-pin-halo" r="12"/>
+            <circle class="map-pin-dot"  r="4"/>
+            <circle class="map-pin-inner" r="1.4"/>
+            <text class="map-pin-label" x="-8" y="2" text-anchor="end">The Hague</text>
+          </g>
+          <g class="map-pin" data-loc="rotterdam" transform="translate(135.5 173.3)">
+            <circle class="map-pin-halo" r="14"/>
+            <circle class="map-pin-dot"  r="5"/>
+            <circle class="map-pin-inner" r="1.8"/>
+            <text class="map-pin-label" x="-8" y="3" text-anchor="end">Rotterdam</text>
+          </g>
+          <g class="map-pin" data-loc="utrecht" transform="translate(162.4 160.7)">
+            <circle class="map-pin-halo" r="12"/>
+            <circle class="map-pin-dot"  r="4"/>
+            <circle class="map-pin-inner" r="1.4"/>
+            <text class="map-pin-label" x="9" y="3" text-anchor="start">Utrecht</text>
+          </g>
+          <g class="map-pin" data-loc="brasov" transform="translate(650.8 332.4)">
+            <circle class="map-pin-halo" r="12"/>
+            <circle class="map-pin-dot"  r="4"/>
+            <circle class="map-pin-inner" r="1.4"/>
+            <text class="map-pin-label" x="0" y="-12" text-anchor="middle">Brașov</text>
+          </g>
+          <g class="map-pin" data-loc="bucharest" transform="translate(667.4 395.2)">
+            <circle class="map-pin-halo" r="17"/>
+            <circle class="map-pin-dot"  r="6"/>
+            <circle class="map-pin-inner" r="2"/>
+            <text class="map-pin-label map-pin-label--big" x="0" y="22" text-anchor="middle">Bucharest</text>
+          </g>
+          <g class="map-pin" data-loc="craiova" transform="translate(589.1 400.9)">
+            <circle class="map-pin-halo" r="12"/>
+            <circle class="map-pin-dot"  r="4"/>
+            <circle class="map-pin-inner" r="1.4"/>
+            <text class="map-pin-label" x="0" y="20" text-anchor="middle">Craiova</text>
+          </g>
+        </svg>
+
+        <aside class="map-panel" id="map-panel" aria-live="polite">
+          <button class="map-panel-close" id="map-panel-close" aria-label="close">✕</button>
+          <span class="map-panel-eyebrow">a place</span>
+          <h3 class="map-panel-city" id="map-panel-city">somewhere we've been</h3>
+          <p class="map-panel-subtitle" id="map-panel-subtitle">pick a pin to remember it</p>
+          <p class="map-panel-blurb" id="map-panel-blurb">every dot on this map is a date with you.</p>
+          <p class="map-panel-count" id="map-panel-count"></p>
+          <ul class="map-panel-list" id="map-panel-list"></ul>
+        </aside>
+      </div>
+    </section>
+  </div>
+
+  <!-- ════════ MEMORY MODAL (opened from map panel clicks) ════════ -->
+  <div class="memory-overlay" id="memory-overlay"></div>
+  <div class="memory-wrap" id="memory-wrap">
+    <div class="memory-modal" id="memory-modal" role="dialog" aria-modal="true" aria-hidden="true">
+      <button class="memory-modal-close" id="memory-modal-close" aria-label="close">✕</button>
+      <div class="memory-modal-content" id="memory-modal-content"></div>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="js/petals.js?v=3"></script>
+  <script src="js/cursor.js"></script>
+  <script src="js/cat.js"></script>
+  <script src="js/map.js"></script>
+  <script src="js/main.js?v=4"></script>
+
+</body>
+</html>

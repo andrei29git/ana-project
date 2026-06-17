@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>our soundtrack · for Ana</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><path d=%22M92,20 C87,10 73,4 63,10 L50,20 L37,10 C27,4 13,10 8,20 C2,32 5,47 13,57 L50,90 L87,57 C95,47 98,32 92,20Z%22 fill=%22%23c0392b%22/></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Outfit:wght@300;400;500&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css?v=11">
+  <link rel="stylesheet" href="css/desk-test.css?v=18">
+</head>
+<body class="page">
+
+  <canvas id="petal-canvas"></canvas>
+  <div id="grain"></div>
+  <div id="sparkle-container"></div>
+
+  <div class="chapter-overlay open" id="overlay-soundtrack">
+    <a class="overlay-close" href="index.html#desk">&larr; back to the desk</a>
+    <section id="soundtrack" class="chapter soundtrack-section">
+      <h2 class="section-heading">three songs that are ours</h2>
+
+      <div class="records">
+        <div class="record-set">
+          <div class="record record--pink" data-record="1">
+            <div class="record-disc">
+              <div class="record-grooves"></div>
+              <div class="record-label">
+                <span class="record-song">White Dress</span>
+                <span class="record-artist">Kanye West</span>
+              </div>
+              <div class="record-hole"></div>
+            </div>
+            <div class="record-arm"></div>
+          </div>
+        </div>
+
+        <div class="record-set">
+          <div class="record record--navy" data-record="2">
+            <div class="record-disc">
+              <div class="record-grooves"></div>
+              <div class="record-label">
+                <span class="record-song">Heartbeat</span>
+                <span class="record-artist">Childish Gambino</span>
+              </div>
+              <div class="record-hole"></div>
+            </div>
+            <div class="record-arm"></div>
+          </div>
+        </div>
+
+        <div class="record-set" id="flashing-set">
+          <div class="record record--purple" data-record="3">
+            <div class="record-disc">
+              <div class="record-grooves"></div>
+              <div class="record-label">
+                <span class="record-song">Flashing Lights</span>
+                <span class="record-artist">Kanye West</span>
+              </div>
+              <div class="record-hole"></div>
+            </div>
+            <div class="record-arm"></div>
+          </div>
+          <div id="karaoke-overlay">
+            <video id="karaoke-video" playsinline preload="none">
+              <source src="audio/karaoke-flashing-lights.mp4" type="video/mp4">
+            </video>
+            <button id="karaoke-close" type="button">my ears hurt</button>
+          </div>
+        </div>
+      </div>
+      <p class="records-hint">click a record to spin it</p>
+    </section>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="js/petals.js?v=3"></script>
+  <script src="js/cursor.js"></script>
+  <script src="js/cat.js"></script>
+  <script src="js/main.js?v=4"></script>
+
+</body>
+</html>

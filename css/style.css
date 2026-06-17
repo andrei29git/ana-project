@@ -305,9 +305,22 @@ section { position: relative; z-index: 2; }
   color: var(--ink-faint);
 }
 .countdown-units {
+  position: relative;
   display: flex;
   align-items: flex-start;
   gap: 0.55rem;
+}
+.countdown-hopefully {
+  position: absolute;
+  top: -1.3rem;
+  right: -1.3rem;
+  z-index: 5;
+  font-family: 'Caveat', cursive;
+  font-size: 1.5rem;
+  color: var(--wine);
+  transform: rotate(11deg);
+  pointer-events: none;
+  opacity: 0.9;
 }
 .flip-unit {
   display: flex;
@@ -1360,7 +1373,10 @@ section { position: relative; z-index: 2; }
   margin-top: 3rem;
 }
 
-/* karaoke popup — sits right on top of the Flashing Lights record */
+/* karaoke popup — sits right on top of the Flashing Lights record.
+   #flashing-set is the positioning context so the popup centers on the
+   record itself (independent of any ancestor layout). */
+#flashing-set { position: relative; }
 #karaoke-overlay {
   position: absolute;
   top: 50%;

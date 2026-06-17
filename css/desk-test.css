@@ -332,6 +332,7 @@ body {
   font-style: italic;
   font-size: 0.9rem;
   color: var(--wine);
+  text-decoration: none;
   cursor: pointer;
   letter-spacing: 0.04em;
   transition: opacity 200ms, transform 200ms, background 200ms;
@@ -490,4 +491,17 @@ body {
 @media (max-width: 480px) {
   .desk-hint { font-size: 0.72rem; }
   .overlay-card h2 { font-size: 1.8rem; }
+}
+
+/* ───── standalone feature pages (one feature per URL) ─────
+   On these pages the chapter content is the whole page, so it scrolls with
+   the window (not as a fixed internal-scroll overlay). This restores the
+   original scroll-triggered reveals, which fire on window scroll. */
+body.page { background: var(--ivory); overflow-x: hidden; }
+body.page .chapter-overlay {
+  position: static;
+  opacity: 1;
+  pointer-events: auto;
+  overflow: visible;
+  min-height: 100vh;
 }
