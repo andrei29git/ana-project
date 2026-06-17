@@ -90,6 +90,9 @@
   gap: 1.4rem;
   animation: game-fade 360ms ease;
 }
+/* hidden must win over the display:flex above, so a finished result fully
+   replaces the question instead of stacking under it */
+.game-view[hidden], .result-view[hidden], .history-view[hidden] { display: none; }
 @keyframes game-fade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
 
 .game-progress {
@@ -225,6 +228,8 @@
   border-radius: 999px;
   padding: 0.7rem 1.8rem;
   cursor: pointer;
+  text-decoration: none;
+  display: inline-block;
   transition: transform 180ms ease, background 180ms ease;
 }
 .game-btn:hover { transform: translateY(-2px); background: var(--wine-2); }
@@ -275,6 +280,54 @@
 }
 .guess-row--right .guess-mark { color: #5f8a52; }
 .guess-row--wrong .guess-mark { color: var(--wine-2); }
+
+/* ── quiz (guess the shark): photo prompt + text options ── */
+.quiz-photo {
+  width: 100%;
+  max-width: 440px;
+  aspect-ratio: 4 / 3;
+  background-size: cover;
+  background-position: center;
+  background-color: var(--paper-3);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 20px var(--shadow);
+}
+.quiz-photo--empty {
+  background-color: transparent;
+  border: 2px dashed var(--ink-faint);
+  box-shadow: none;
+}
+.quiz-options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.9rem;
+  width: 100%;
+  max-width: 440px;
+  margin-top: 0.4rem;
+}
+.quiz-option {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.15rem;
+  color: var(--ink);
+  background: var(--paper-2);
+  border: 1px solid var(--paper-3);
+  border-radius: 12px;
+  padding: 1rem 0.8rem;
+  cursor: pointer;
+  transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease, background 180ms ease;
+  box-shadow: 0 4px 14px var(--shadow);
+}
+.quiz-option:hover {
+  transform: translateY(-3px);
+  border-color: var(--rose);
+  background: var(--paper);
+  box-shadow: 0 10px 24px var(--shadow);
+}
+@media (max-width: 480px) { .quiz-options { grid-template-columns: 1fr; } }
 
 /* ── levels grid (this or that) — one tile per topic ── */
 .levels-grid {

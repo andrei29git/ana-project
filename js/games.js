@@ -81,6 +81,27 @@ const FAVORITES = {
   ],
 };
 
+// ── Game 3: guess the shark  (QUIZ) ─────────────────────────────────
+// A photo quiz: each round shows a shark photo and 4 name options; she
+// picks which shark it is. `image` is the photo (drop it in
+// images/games/guess-the-shark/), `correct` is the index of the right
+// answer (0 = first option). Add a round = add an object; any number of
+// options works.
+const GUESS_THE_SHARK = {
+  key: 'shark',
+  title: 'guess the shark',
+  emoji: '🦈',
+  intro: "you and your sharks. one photo, four names, pick the right one. let's see if you really know them.",
+  rounds: [
+    { image: 'images/games/guess-the-shark/1-great-white.jpg',     options: [ { label: 'great white' }, { label: 'tiger shark' }, { label: 'bull shark' }, { label: 'mako' } ], correct: 0 },
+    { image: 'images/games/guess-the-shark/2-hammerhead.jpeg',     options: [ { label: 'hammerhead' }, { label: 'nurse shark' }, { label: 'lemon shark' }, { label: 'blacktip reef' } ], correct: 0 },
+    { image: 'images/games/guess-the-shark/3-whale-shark.jpg',     options: [ { label: 'whale shark' }, { label: 'basking shark' }, { label: 'megamouth' }, { label: 'goblin shark' } ], correct: 0 },
+    { image: 'images/games/guess-the-shark/4-thresher-shark.jpg',  options: [ { label: 'thresher' }, { label: 'blue shark' }, { label: 'sand tiger' }, { label: 'mako' } ], correct: 0 },
+    { image: 'images/games/guess-the-shark/5-nurse-shark.jpg',     options: [ { label: 'nurse shark' }, { label: 'leopard shark' }, { label: 'wobbegong' }, { label: 'angel shark' } ], correct: 0 },
+    // … add as many shark photos as you like
+  ],
+};
+
 // ── Result messages ─────────────────────────────────────────────────
 // Checked top-down: first tier whose `min` percent is reached wins.
 const RESULT_TIERS = [
@@ -91,12 +112,21 @@ const RESULT_TIERS = [
   { min: 0,   message: "well, guess I'm spending the night on the couch tonight. 🛋️" },
 ];
 
+// result messages for the shark quiz (scored against the right answer)
+const SHARK_TIERS = [
+  { min: 100, message: 'shark queen. every single one. 🦈👑' },
+  { min: 80,  message: 'basically a marine biologist.' },
+  { min: 60,  message: 'solid. you know your sharks.' },
+  { min: 40,  message: 'not bad, but back to shark week with you.' },
+  { min: 0,   message: 'okay, maybe sharks are more my thing than yours. 🦈' },
+];
+
 /* ╔══════════════════════════════════════════════════════════════╗
    ║  END OF CONFIG — implementation below                        ║
    ╚══════════════════════════════════════════════════════════════╝ */
 
 (function () {
-  const GAMES = { [THIS_OR_THAT.key]: THIS_OR_THAT, [FAVORITES.key]: FAVORITES };
+  const GAMES = { [THIS_OR_THAT.key]: THIS_OR_THAT, [FAVORITES.key]: FAVORITES, [GUESS_THE_SHARK.key]: GUESS_THE_SHARK };
 
   // ── storage layer (local now, Firestore-ready). Kept for the saved
   //    results + the (currently hidden) past-plays history. ──────────
@@ -171,6 +201,14 @@ const RESULT_TIERS = [
   }
 
   function scrollTop() { window.scrollTo({ top: 0, behavior: 'auto' }); }
+
+  function shuffle(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr;
+  }
 
   /* ── LEVELS mode (this or that) ──────────────────────────────────
      Levels page = one tile per topic. Click a topic → play its rounds
@@ -308,11 +346,86 @@ const RESULT_TIERS = [
         <p class="result-percent">${percent}% match</p>
         <p class="result-message">${tierFor(percent).message}</p>
         <div class="result-actions">
-          <button class="game-btn" data-act="again">play again</button>
-          <a class="game-btn game-btn--ghost" href="games.html">other games</a>
+          <a class="game-btn" href="games.html">other games</a>
         </div>
       `;
-      resEl.querySelector('[data-act="again"]').addEventListener('click', () => { current = 0; answers.length = 0; renderRound(); });
+      show(resEl);
+    }
+
+    gameEl.innerHTML = `
+      <span class="game-intro-emoji">${game.emoji}</span>
+      <h2 class="game-prompt">${game.title}</h2>
+      <p class="game-intro">${game.intro}</p>
+      <button class="game-btn" id="game-start">let's go ✦</button>
+    `;
+    gameEl.querySelector('#game-start').addEventListener('click', renderRound);
+    show(gameEl);
+  }
+
+  /* ── QUIZ mode (guess the shark): photo + text options, scored
+     against the correct answer ─────────────────────────────────── */
+  function runQuiz(key) {
+    const game   = GAMES[key];
+    const gameEl = document.getElementById('game-view');
+    const resEl  = document.getElementById('result-view');
+    if (!game || !gameEl || !resEl) return;
+
+    const show = (el) => { gameEl.hidden = el !== gameEl; resEl.hidden = el !== resEl; scrollTop(); };
+    let current = 0;
+    const answers = [];
+
+    function renderRound() {
+      const round = game.rounds[current];
+      gameEl.innerHTML = `
+        <p class="game-progress">${current + 1} / ${game.rounds.length}</p>
+        <h2 class="game-prompt">which shark is this?</h2>
+        <div class="quiz-photo${round.image ? '' : ' quiz-photo--empty'}"${round.image ? ` style="background-image:url('${round.image}')"` : ''}>${round.image ? '' : '<span class="option-img-hint">photo</span>'}</div>
+        <div class="quiz-options"></div>
+      `;
+      const opts = gameEl.querySelector('.quiz-options');
+      // shuffle so the correct answer isn't always in the same spot
+      shuffle(round.options.map((_, i) => i)).forEach((origIdx) => {
+        const b = document.createElement('button');
+        b.className = 'quiz-option';
+        b.textContent = round.options[origIdx].label;
+        b.addEventListener('click', () => {
+          answers[current] = origIdx; current++;
+          current < game.rounds.length ? renderRound() : finish();
+        });
+        opts.appendChild(b);
+      });
+    }
+
+    function finish() {
+      const total = game.rounds.length;
+      let score = 0;
+      game.rounds.forEach((r, i) => { if (answers[i] === r.correct) score++; });
+      const percent = Math.round((score / total) * 100);
+      const tier = SHARK_TIERS.find(t => percent >= t.min) || SHARK_TIERS[SHARK_TIERS.length - 1];
+      Store.saveResult({ game: game.key, gameTitle: game.title, score, total, percent, date: new Date().toISOString() });
+
+      const breakdown = game.rounds.map((r, i) => {
+        const right = answers[i] === r.correct;
+        const correctLabel = r.options[r.correct].label;
+        const herLabel = r.options[answers[i]].label;
+        return `
+          <li class="guess-row guess-row--${right ? 'right' : 'wrong'}">
+            <span class="guess-cat">${correctLabel}</span>
+            <span class="guess-mine">${right ? 'you got it' : 'you said ' + herLabel}</span>
+            <span class="guess-mark">${right ? '✓ correct' : '✗ wrong'}</span>
+          </li>`;
+      }).join('');
+
+      resEl.innerHTML = `
+        <p class="result-eyebrow">${game.title}</p>
+        <p class="result-score">${score}<span>/${total}</span></p>
+        <p class="result-percent">${percent}% right</p>
+        <p class="result-message">${tier.message}</p>
+        <ul class="guess-list">${breakdown}</ul>
+        <div class="result-actions">
+          <a class="game-btn" href="games.html">other games</a>
+        </div>
+      `;
       show(resEl);
     }
 
@@ -356,7 +469,9 @@ const RESULT_TIERS = [
   const pageGame = document.body.dataset.game;
   const mode = document.body.dataset.mode;
   if (pageGame) {
-    (mode === 'levels') ? runLevels(pageGame) : runGame(pageGame);
+    if (mode === 'levels') runLevels(pageGame);
+    else if (mode === 'quiz') runQuiz(pageGame);
+    else runGame(pageGame);
   } else {
     wireHub();
   }
