@@ -185,7 +185,8 @@ body {
 
 .proxy-folded {
   position: absolute;
-  top: 50%; left: 50%;
+  /* top-center: the spot the capsule envelope used to occupy */
+  top: 17%; left: 50%;
   width: clamp(220px, 26vw, 320px);
   aspect-ratio: 1.8 / 1;
   background: #e8d9b8;
@@ -235,7 +236,7 @@ body {
 /* the small "love letter" caption that sits just below the sealed envelope */
 .proxy-folded-label {
   position: absolute;
-  top: calc(50% + clamp(78px, 8.8vw, 112px));
+  top: calc(17% + clamp(78px, 8.8vw, 112px));
   left: 50%;
   transform: translateX(-50%);
   z-index: 30;

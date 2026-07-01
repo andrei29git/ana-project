@@ -88,7 +88,9 @@ items.forEach(item => {
     });
   });
   item.addEventListener('click', () => {
-    window.location.href = `${item.dataset.chapter}.html`;
+    // items without a data-chapter (e.g. the calendar) handle their own
+    // click behavior in their own script instead of navigating away.
+    if (item.dataset.chapter) window.location.href = `${item.dataset.chapter}.html`;
   });
 });
 

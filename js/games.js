@@ -63,6 +63,16 @@ const THIS_OR_THAT = {
         { category: 'bonus',       options: [ { label: 'face masks',     img: 'images/games/build-your-perfect/level-3-night-in/bonus-1-face-masks.jpg' },         { label: 'baking together',   img: 'images/games/build-your-perfect/level-3-night-in/bonus-2-baking-together.jpg' } ],     guess: 1 },
       ],
     },
+    {
+      name: 'lazy sunday',
+      rounds: [
+        { category: 'wake up',   options: [ { label: 'sleep in',        img: 'images/games/build-your-perfect/level-4-lazy-sunday/wake-up-1-sleep-in.jpg' },        { label: 'up early',        img: 'images/games/build-your-perfect/level-4-lazy-sunday/wake-up-2-up-early.jpg' } ],        guess: 0 },
+        { category: 'morning',   options: [ { label: 'boba',            img: 'images/games/build-your-perfect/level-4-lazy-sunday/morning-1-boba.jpg' },              { label: 'tea',             img: 'images/games/build-your-perfect/level-4-lazy-sunday/morning-2-tea.jpg' } ],             guess: 1 },
+        { category: 'breakfast', options: [ { label: 'pancakes',        img: 'images/games/build-your-perfect/level-4-lazy-sunday/breakfast-1-pancakes.jpeg' },      { label: 'eggs benedict',   img: 'images/games/build-your-perfect/level-4-lazy-sunday/breakfast-2-benedict-eggs.jpg' } ],  guess: 1 },
+        { category: 'afternoon', options: [ { label: 'outside walk',    img: 'images/games/build-your-perfect/level-4-lazy-sunday/afternoon-1-outside-walk.jpg' },  { label: 'stay in bed',     img: 'images/games/build-your-perfect/level-4-lazy-sunday/afternoon-2-stay-in-bed.jpg' } ],    guess: 0 },
+        { category: 'evening',   options: [ { label: 'cook together',   img: 'images/games/build-your-perfect/level-4-lazy-sunday/evening-1-cook-together.jpg' },   { label: 'order in',        img: 'images/games/build-your-perfect/level-4-lazy-sunday/evening-2-order-in.jpg' } ],        guess: 0 },
+      ],
+    },
     // … add as many levels (topics) as you like
   ],
 };
@@ -306,7 +316,14 @@ const SHARK_TIERS = [
       renderRound();
     }
 
-    renderMenu();
+    // deep-link: this-or-that.html?level=lazy-sunday jumps straight into
+    // that level instead of showing the menu first (used by the calendar
+    // card links). matches by a slugified version of the level's name.
+    const slugify = (s) => s.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+    const wantedSlug = new URLSearchParams(window.location.search).get('level');
+    const deepLinkIndex = wantedSlug ? levels.findIndex(lv => slugify(lv.name) === wantedSlug) : -1;
+
+    deepLinkIndex !== -1 ? playLevel(deepLinkIndex) : renderMenu();
   }
 
   /* ── sequential mode (favorites): intro → all rounds → result ───── */

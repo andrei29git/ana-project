@@ -420,6 +420,7 @@ section { position: relative; z-index: 2; }
 }
 .secret-star {
   pointer-events: all;
+  z-index: 3;               /* above .hero-frame (z-index 2) so the click lands */
   color: var(--gold);
   font-size: 1.35rem;
   animation: secret-pulse 2.6s ease-in-out infinite !important;

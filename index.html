@@ -8,8 +8,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Outfit:wght@300;400;500&family=Caveat:wght@500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=11">
-  <link rel="stylesheet" href="css/desk-test.css?v=18">
+  <link rel="stylesheet" href="css/style.css?v=12">
+  <link rel="stylesheet" href="css/desk-test.css?v=19">
+  <link rel="stylesheet" href="css/calendar.css?v=5">
 </head>
 <body>
 
@@ -305,21 +306,94 @@
           <text class="desk-item-label" x="0" y="-105" font-family="Fraunces" font-size="14" fill="#f3e8d4" text-anchor="middle" font-style="italic">reasons I love you</text>
         </g>
 
-        <!-- WAX-SEALED ENVELOPE — time capsule (for later), locked -->
-        <g class="desk-item" data-chapter="capsule" data-pos-x="595" data-pos-y="135" data-pos-r="-3">
-          <rect x="-92" y="-52" width="184" height="104" fill="rgba(0,0,0,0.25)" transform="translate(6 6)"/>
-          <rect x="-90" y="-50" width="180" height="100" fill="#e8d9b8" stroke="#8e6940" stroke-width="0.7"/>
-          <path d="M -90 -50 L 0 13 L 90 -50 Z" fill="#d9c79e" stroke="#8e6940" stroke-width="0.6"/>
-          <circle cx="0" cy="3" r="14" fill="#6f1f2d"/>
-          <circle cx="0" cy="3" r="14" fill="none" stroke="#4d121d" stroke-width="0.5"/>
-          <!-- padlock instead of heart -->
-          <g transform="translate(0 3)">
-            <path d="M -3.5 -2.5 Q -3.5 -7 0 -7 Q 3.5 -7 3.5 -2.5" fill="none" stroke="#f4d28a" stroke-width="1.3" stroke-linecap="round"/>
-            <rect x="-4.8" y="-2.5" width="9.6" height="7" rx="0.9" fill="#f4d28a"/>
-            <circle cx="0" cy="0.4" r="1" fill="#6f1f2d"/>
-            <rect x="-0.4" y="0.4" width="0.8" height="2.2" fill="#6f1f2d"/>
+        <!-- TEAR-OFF CALENDAR — one real-dated page per day, July 1 → August 1.
+             true center: the hero object, kept upright (no tilt) so the date
+             stays legible, unlike the scattered tilted papers around it. -->
+        <g class="desk-item desk-calendar" id="desk-calendar" data-pos-x="600" data-pos-y="400" data-pos-r="0">
+
+          <!-- drop shadow -->
+          <rect x="-92" y="-90" width="184" height="188" fill="rgba(0,0,0,0.28)" transform="translate(7 8)"/>
+
+          <!-- backing block: implies many pages underneath -->
+          <g class="cal-backing">
+            <rect x="-88" y="-86" width="176" height="182" rx="3" fill="#d8c7a0" stroke="#8e6940" stroke-width="0.5" transform="rotate(2)"/>
+            <rect x="-90" y="-88" width="180" height="184" rx="3" fill="#e8d9b8" stroke="#8e6940" stroke-width="0.5" transform="rotate(-1.5)"/>
           </g>
-          <text class="desk-item-label" x="0" y="78" font-family="Fraunces" font-size="14" fill="#f3e8d4" text-anchor="middle" font-style="italic">for later</text>
+
+          <!-- spiral binding -->
+          <g class="cal-spiral" stroke="#8e6940" stroke-width="2.2" fill="none" stroke-linecap="round">
+            <path d="M -68 -90 Q -68 -100 -58 -100 Q -48 -100 -48 -90"/>
+            <path d="M -36 -90 Q -36 -100 -26 -100 Q -16 -100 -16 -90"/>
+            <path d="M -4  -90 Q -4  -100 6   -100 Q 16  -100 16  -90"/>
+            <path d="M 28  -90 Q 28  -100 38  -100 Q 48  -100 48  -90"/>
+            <path d="M 60  -90 Q 60  -100 70  -100 Q 80  -100 80  -90"/>
+          </g>
+
+          <!-- the tear-off sheet: the current openable (or next locked) day -->
+          <g class="cal-sheet" id="cal-sheet">
+            <path class="cal-sheet-shadow" d="M -90 -84 L 90 -84 L 90 78 L 70 70 L 50 78 L 30 70 L 10 78 L -10 70 L -30 78 L -50 70 L -70 78 L -90 70 Z" fill="rgba(0,0,0,0.14)" transform="translate(3 4)"/>
+            <path class="cal-sheet-face" d="M -90 -84 L 90 -84 L 90 78 L 70 70 L 50 78 L 30 70 L 10 78 L -10 70 L -30 78 L -50 70 L -70 78 L -90 70 Z" fill="#f8f1e3" stroke="#a08560" stroke-width="0.7"/>
+
+            <text class="cal-weekday" id="cal-weekday" x="0" y="-56" font-family="Outfit" font-size="11" letter-spacing="1.4" fill="#9c4456" text-anchor="middle">WEDNESDAY</text>
+            <text class="cal-month"   id="cal-month"   x="0" y="-34" font-family="Outfit" font-size="13" letter-spacing="1.8" fill="#ab7f37" text-anchor="middle">JULY</text>
+            <text class="cal-day-num" id="cal-day-num" x="0" y="36"  font-family="Fraunces" font-weight="600" font-size="64" fill="#3d2820" text-anchor="middle">1</text>
+            <line x1="-38" y1="52" x2="38" y2="52" stroke="#cda866" stroke-width="0.8" opacity="0.6"/>
+            <text class="cal-hint" id="cal-hint" x="0" y="66" font-family="Fraunces" font-style="italic" font-size="8" fill="#a08560" text-anchor="middle">tear here</text>
+
+            <!-- clean tear line along the top, where the page is still
+                 hinged near the spiral - no peeled-corner flourish -->
+            <line class="cal-tear-line" x1="-90" y1="-84" x2="90" y2="-84" stroke="#a08560" stroke-width="1" stroke-dasharray="3 3" opacity="0.55"/>
+          </g>
+
+          <text class="desk-item-label" x="0" y="120" font-family="Fraunces" font-size="14" fill="#f3e8d4" text-anchor="middle" font-style="italic">today's page</text>
+        </g>
+
+        <!-- torn-page pile: its own separate desk object (own hover-lift +
+             shadow, same as every other item here), sitting just below the
+             calendar. each layer is its own <g> (GSAP's opacity/y target)
+             wrapping a static-rotated <g> (its own shadow + face), so
+             nothing here fights GSAP's transformOrigin the way the tear
+             animation once did. -->
+        <g class="desk-item desk-calendar-pile" id="desk-calendar-pile" data-pos-x="600" data-pos-y="560" data-pos-r="0">
+          <ellipse id="cal-pile-shadow" cx="0" cy="10" rx="56" ry="9" fill="rgba(0,0,0,0.24)" opacity="0"/>
+          <g class="cal-pile" id="cal-pile">
+            <g class="cal-pile-sheet" id="cal-pile-1" opacity="0">
+              <g transform="rotate(-7)">
+                <rect x="-40" y="-11" width="80" height="23" rx="2" fill="rgba(20,12,4,0.2)" transform="translate(2.5 3.5)"/>
+                <rect x="-40" y="-11" width="80" height="23" rx="2" fill="#f3e8d4" stroke="#8e6940" stroke-width="0.7"/>
+                <line x1="-24" y1="0.5" x2="24" y2="0.5" stroke="#cda866" stroke-width="0.6" opacity="0.5"/>
+              </g>
+            </g>
+            <g class="cal-pile-sheet" id="cal-pile-2" opacity="0">
+              <g transform="rotate(5)">
+                <rect x="-43" y="-12" width="86" height="24" rx="2" fill="rgba(20,12,4,0.2)" transform="translate(2.5 3.5)"/>
+                <rect x="-43" y="-12" width="86" height="24" rx="2" fill="#efe3d1" stroke="#8e6940" stroke-width="0.7"/>
+                <line x1="-26" y1="0.5" x2="26" y2="0.5" stroke="#cda866" stroke-width="0.6" opacity="0.5"/>
+              </g>
+            </g>
+            <g class="cal-pile-sheet" id="cal-pile-3" opacity="0">
+              <g transform="rotate(-4)">
+                <rect x="-38" y="-11" width="76" height="22" rx="2" fill="rgba(20,12,4,0.2)" transform="translate(2.5 3.5)"/>
+                <rect x="-38" y="-11" width="76" height="22" rx="2" fill="#f3e8d4" stroke="#8e6940" stroke-width="0.7"/>
+                <line x1="-22" y1="0.5" x2="22" y2="0.5" stroke="#cda866" stroke-width="0.6" opacity="0.5"/>
+              </g>
+            </g>
+            <g class="cal-pile-sheet" id="cal-pile-4" opacity="0">
+              <g transform="rotate(6)">
+                <rect x="-46" y="-12" width="92" height="25" rx="2" fill="rgba(20,12,4,0.2)" transform="translate(2.5 3.5)"/>
+                <rect x="-46" y="-12" width="92" height="25" rx="2" fill="#efe3d1" stroke="#8e6940" stroke-width="0.7"/>
+                <line x1="-28" y1="0.5" x2="28" y2="0.5" stroke="#cda866" stroke-width="0.6" opacity="0.5"/>
+              </g>
+            </g>
+            <g class="cal-pile-sheet" id="cal-pile-5" opacity="0">
+              <g transform="rotate(-3)">
+                <rect x="-41" y="-11" width="82" height="23" rx="2" fill="rgba(20,12,4,0.2)" transform="translate(2.5 3.5)"/>
+                <rect x="-41" y="-11" width="82" height="23" rx="2" fill="#f3e8d4" stroke="#8e6940" stroke-width="0.7"/>
+                <line x1="-25" y1="0.5" x2="25" y2="0.5" stroke="#cda866" stroke-width="0.6" opacity="0.5"/>
+              </g>
+            </g>
+          </g>
+          <text class="desk-item-label" id="cal-pile-label" x="0" y="35" font-family="Fraunces" font-size="14" fill="#f3e8d4" text-anchor="middle" font-style="italic">torn pages</text>
         </g>
 
       </svg>
@@ -351,6 +425,17 @@
     <p class="modal-small">don't tell me you know. 🤭</p>
   </div>
 
+  <!-- ════════ CALENDAR DAY-CARD MODAL ════════ -->
+  <div class="calendar-overlay" id="calendar-overlay"></div>
+  <div class="calendar-wrap" id="calendar-wrap">
+    <div class="calendar-modal" id="calendar-modal" role="dialog" aria-modal="true" aria-hidden="true">
+      <button class="calendar-modal-close" id="calendar-modal-close" aria-label="close">✕</button>
+      <button class="calendar-nav calendar-nav-prev" id="calendar-nav-prev" aria-label="previous opened day">‹</button>
+      <button class="calendar-nav calendar-nav-next" id="calendar-nav-next" aria-label="next opened day">›</button>
+      <div class="calendar-modal-content" id="calendar-modal-content"></div>
+    </div>
+  </div>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
   <script src="js/petals.js?v=3"></script>
@@ -360,7 +445,9 @@
   <script src="js/cat.js"></script>
   <script src="js/apology.js"></script>
   <script src="js/main.js?v=4"></script>
-  <script src="js/desk-test.js?v=16"></script>
+  <script src="js/desk-test.js?v=17"></script>
+  <script src="js/calendar-data.js?v=5"></script>
+  <script src="js/calendar.js?v=14"></script>
 
 </body>
 </html>
