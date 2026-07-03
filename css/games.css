@@ -213,7 +213,7 @@
   font-size: 1.5rem;
   line-height: 1.45;
   color: var(--ink);
-  max-width: 460px;
+  max-width: 620px;
   margin-top: 0.4rem;
 }
 
@@ -259,12 +259,12 @@
 .guess-cat {
   font-family: var(--serif);
   font-style: italic;
-  font-size: 1.05rem;
+  font-size: 1.2rem;
   color: var(--ink);
 }
 .guess-mine {
   font-family: var(--sans);
-  font-size: 0.82rem;
+  font-size: 0.95rem;
   color: var(--ink-soft);
   grid-column: 1;
 }
@@ -303,11 +303,14 @@
 .quiz-options {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 0.9rem;
+  gap: 1rem;
   width: 100%;
   max-width: 440px;
   margin-top: 0.4rem;
 }
+/* wider layout for options with a "Title (feat. X)" + artist line, so
+   the title line fits on one row instead of wrapping mid-word */
+.quiz-options--wide { max-width: 720px; }
 .quiz-option {
   font-family: var(--serif);
   font-style: italic;
@@ -316,10 +319,22 @@
   background: var(--paper-2);
   border: 1px solid var(--paper-3);
   border-radius: 12px;
-  padding: 1rem 0.8rem;
+  padding: 1.1rem 1rem;
   cursor: pointer;
   transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease, background 180ms ease;
   box-shadow: 0 4px 14px var(--shadow);
+}
+.quiz-option-title {
+  display: block;
+  font-size: 1.05rem;
+  line-height: 1.3;
+}
+.quiz-option-artist {
+  display: block;
+  font-size: 0.82rem;
+  line-height: 1.3;
+  opacity: 0.7;
+  margin-top: 0.3rem;
 }
 .quiz-option:hover {
   transform: translateY(-3px);
@@ -327,7 +342,72 @@
   background: var(--paper);
   box-shadow: 0 10px 24px var(--shadow);
 }
+.quiz-option:disabled { cursor: default; }
+.quiz-option:disabled:hover { transform: none; box-shadow: 0 4px 14px var(--shadow); }
+.quiz-option--correct {
+  border-color: #5f8a52;
+  background: rgba(95, 138, 82, 0.14);
+  color: #3f5c37;
+}
+.quiz-option--wrong {
+  border-color: var(--wine-2);
+  background: rgba(156, 68, 86, 0.12);
+  color: var(--wine-2);
+}
 @media (max-width: 480px) { .quiz-options { grid-template-columns: 1fr; } }
+
+/* ── quiz (guess the song): lyric snippet prompt instead of a photo ── */
+.quiz-lyric {
+  width: 100%;
+  max-width: 500px;
+  min-height: 120px;
+  padding: 2rem 1.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--paper-2);
+  border: 1px solid var(--paper-3);
+  border-radius: 14px;
+  box-shadow: 0 6px 20px var(--shadow);
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.3rem;
+  line-height: 1.6;
+  color: var(--ink);
+  text-align: center;
+}
+
+/* reveal step: right/wrong message + clip replay + next-round button */
+.quiz-reveal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.9rem;
+  margin-top: 0.4rem;
+}
+.quiz-reveal-message {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.2rem;
+}
+.quiz-reveal-message--right { color: #5f8a52; }
+.quiz-reveal-message--wrong { color: var(--wine-2); }
+.quiz-clip-replay {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 1px solid var(--wine);
+  background: var(--wine);
+  color: var(--paper);
+  font-size: 0.95rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 180ms ease, background 180ms ease;
+}
+.quiz-clip-replay:hover { transform: scale(1.06); background: var(--wine-2); }
+.quiz-clip-replay.playing { background: #9c4456; }
 
 /* ── levels grid (this or that) — one tile per topic ── */
 .levels-grid {

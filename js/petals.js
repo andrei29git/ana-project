@@ -62,12 +62,46 @@
     return -1;
   }
 
+  // self-contained toast (petals.js runs on every page, but gsap and
+  // easter-eggs.js's window.showNoSecret don't, so this can't lean on those)
+  function noSecretToast(e) {
+    const toast = document.createElement('p');
+    toast.textContent = 'no secret… for now…';
+    Object.assign(toast.style, {
+      position: 'fixed',
+      fontFamily: "'Fraunces', serif",
+      fontStyle: 'italic',
+      fontSize: '1rem',
+      color: 'var(--ivory, #f3e8d4)',
+      textShadow: '0 1px 8px rgba(0,0,0,0.7)',
+      pointerEvents: 'none',
+      zIndex: 9999,
+      whiteSpace: 'nowrap',
+      left: ((e && e.clientX) || window.innerWidth  / 2) + 'px',
+      top:  ((e && e.clientY) || window.innerHeight / 2) + 'px',
+      transform: 'translate(-50%, -50%)',
+      opacity: '0',
+      transition: 'opacity 0.4s ease, transform 0.4s ease',
+    });
+    document.body.appendChild(toast);
+    requestAnimationFrame(() => {
+      toast.style.opacity = '1';
+      toast.style.transform = 'translate(-50%, calc(-50% - 18px))';
+    });
+    setTimeout(() => {
+      toast.style.opacity = '0';
+      toast.style.transform = 'translate(-50%, calc(-50% - 34px))';
+      setTimeout(() => toast.remove(), 500);
+    }, 1400);
+  }
+
   document.addEventListener('click', (e) => {
     const i = petalAt(e.clientX, e.clientY);
     if (i !== -1) {
       petals.splice(i, 1);
-      // the deep-wine petal is a secret trigger → opens the games page
-      window.location.href = 'games.html';
+      // used to be a secret shortcut to the games page - games is
+      // reachable from the desk now, so this is just a wink
+      noSecretToast(e);
     }
   }, true); // capture phase - fires before other handlers
 

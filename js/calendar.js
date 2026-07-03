@@ -122,9 +122,13 @@
     calGroup.classList.toggle('desk-calendar--done', !!done);
 
     if (animateIn) {
+      // end opacity has to match the CSS lock-dim (.desk-calendar--locked
+      // .cal-sheet { opacity: 0.6 }) - GSAP sets this as an inline style,
+      // which otherwise beats that rule and leaves a freshly-revealed
+      // locked page looking fully dark until the next page load.
       gsap.fromTo(sheetEl,
         { opacity: 0, y: 10, scale: 0.94 },
-        { opacity: 1, y: 0, scale: 1, duration: 0.4, ease: 'back.out(1.6)' }
+        { opacity: locked ? 0.6 : 1, y: 0, scale: 1, duration: 0.4, ease: 'back.out(1.6)' }
       );
     }
     renderPile();
@@ -256,7 +260,6 @@
     } else if (entry.type === 'song' && entry.audio) {
       inner += `<div class="cal-card-song">
                   <button class="cal-song-play" id="cal-song-play" type="button" aria-label="play song">▶</button>
-                  <span class="cal-song-note">♪ ♫</span>
                 </div>`;
       if (entry.body) inner += `<p class="cal-card-caption">${entry.body}</p>`;
     } else {
@@ -268,11 +271,45 @@
     if (entry.type === 'song' && entry.audio) {
       const playBtn = document.getElementById('cal-song-play');
       modalAudio = new Audio(entry.audio);
+
+      // audioStart: seconds into the track to jump to instead of playing
+      // from 0:00 - for when it's really about one specific line, not the
+      // whole song. If play() fires before a pending seek has actually
+      // landed, playback can silently start from 0:00 and drop the seek
+      // (a real race, confirmed while testing this) - so a click while the
+      // seek is still pending waits for the 'seeked' confirmation instead
+      // of playing immediately.
+      let seekPending = !!entry.audioStart;
+      if (entry.audioStart) {
+        modalAudio.addEventListener('loadedmetadata', () => {
+          modalAudio.currentTime = entry.audioStart;
+        }, { once: true });
+        modalAudio.addEventListener('seeked', () => { seekPending = false; }, { once: true });
+      }
+      // audioSnippetSeconds: if set, auto-pauses playback after this many
+      // seconds so the snippet doesn't run on into the rest of the song.
+      // audioPlayToEnd: set true to skip that cutoff entirely and let the
+      // song play out normally past the snippet.
+      if (entry.audioSnippetSeconds && !entry.audioPlayToEnd) {
+        modalAudio.addEventListener('timeupdate', () => {
+          const start = entry.audioStart || 0;
+          if (modalAudio.currentTime >= start + entry.audioSnippetSeconds) {
+            modalAudio.pause();
+            modalAudio.currentTime = start;
+          }
+        });
+      }
+
+      function startPlayback() {
+        modalAudio.play().catch(() => {});
+        playBtn.textContent = '⏸';
+        playBtn.classList.add('playing');
+      }
+
       playBtn.addEventListener('click', () => {
         if (modalAudio.paused) {
-          modalAudio.play().catch(() => {});
-          playBtn.textContent = '⏸';
-          playBtn.classList.add('playing');
+          if (seekPending) modalAudio.addEventListener('seeked', startPlayback, { once: true });
+          else startPlayback();
         } else {
           modalAudio.pause();
           playBtn.textContent = '▶';
@@ -280,6 +317,10 @@
         }
       });
       modalAudio.addEventListener('ended', () => {
+        playBtn.textContent = '▶';
+        playBtn.classList.remove('playing');
+      });
+      modalAudio.addEventListener('pause', () => {
         playBtn.textContent = '▶';
         playBtn.classList.remove('playing');
       });

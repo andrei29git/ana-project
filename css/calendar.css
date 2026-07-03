@@ -180,12 +180,6 @@
 }
 .cal-song-play:hover { transform: scale(1.06); }
 .cal-song-play.playing { background: #9c4456; }
-.cal-song-note {
-  font-family: 'Fraunces', serif;
-  font-size: 1.3rem;
-  color: #ab7f37;
-  opacity: 0.7;
-}
 
 /* ───── mobile ───── */
 

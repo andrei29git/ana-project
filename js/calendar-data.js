@@ -16,6 +16,16 @@
             (drop the file in images/calendar/ and point to it here)
      audio  path to a song — only read when type is 'song'
             (drop the file in audio/calendar/ and point to it here)
+     audioStart          optional, seconds — jumps straight to this point
+                          in the song instead of playing from 0:00. Use
+                          this when it's really about one line, not the
+                          whole track.
+     audioSnippetSeconds optional, seconds — if set, playback auto-stops
+                          this many seconds after audioStart instead of
+                          continuing into the rest of the song.
+     audioPlayToEnd       optional, defaults to false — set true to ignore
+                          audioSnippetSeconds and let the song play out to
+                          the end instead of auto-stopping.
 
    You don't have to fill these in order or all at once — any day can
    stay a placeholder until you're ready, it just won't feel finished
@@ -34,8 +44,22 @@ const CALENDAR_DATA = [
     title: 'day one - AN Advent calendar for you, my love ❤️',
     body: "As you have probably seen already, there is little paper calendar that lives on the desk, one page for every day between now and August 1st. Tear today's page whenever you want it, and it's yours to keep. You can always find it again in the pile. I'll be filling these in as we go and for today we have another little round of Build your perfect... . Happy 11 months and day one, my love. <a class=\"cal-card-link\" href=\"this-or-that.html?level=lazy-sunday\">play today's round →</a>.",
   },
-  { date: '2026-07-02', type: 'note', title: 'TODO', body: 'TODO — David: write day 2.' },
-  { date: '2026-07-03', type: 'note', title: 'TODO', body: 'TODO — David: write day 3.' },
+  {
+    date: '2026-07-02',
+    type: 'song',
+    title: 'devil in a new dress',
+    audio: 'audio/calendar/diand.mp3',
+    audioStart: 0,
+    audioSnippetSeconds: 20, // plays ~20s from audioStart then stops - adjust if you want more/less
+    audioPlayToEnd: false, // set true to let it play out instead of stopping at audioSnippetSeconds
+    body: '"Uh, put your hands to the constellations / The way you look should be a sin, you my sensation". These two lines made me think of you. 🥰🥰',
+  },
+  {
+    date: '2026-07-03',
+    type: 'note',
+    title: 'day three - a little game for you',
+    body: "Hello my LOVE ❤️. I made you a guess the song game, just a little test of how well you know some of our favourite songs. Let's see how good you do 😊. <a class=\"cal-card-link\" href=\"guess-the-song.html\">play guess the song →</a>",
+  },
   { date: '2026-07-04', type: 'note', title: 'TODO', body: 'TODO — David: write day 4.' },
   { date: '2026-07-05', type: 'note', title: 'TODO', body: 'TODO — David: write day 5.' },
   { date: '2026-07-06', type: 'note', title: 'TODO', body: 'TODO — David: write day 6.' },

@@ -1,4 +1,6 @@
-/* Easter egg #1 - the hidden star opens the apology video.
+/* Easter egg #1 - the hidden star. Used to open the games page as a
+   secret shortcut, but games is reachable from the desk (the controller
+   object) now, so this is just a wink - it doesn't lead anywhere.
    (Easter egg #2 lives in countdown.js, #3 in petals.js.) */
 
 window.showNoSecret = function (e) {
@@ -34,6 +36,5 @@ window.showNoSecret = function (e) {
 (function () {
   const star = document.getElementById('secret-star');
   if (!star) return;
-  // the hidden star is one of the secret triggers → opens the games page
-  star.addEventListener('click', () => { window.location.href = 'games.html'; });
+  star.addEventListener('click', (e) => window.showNoSecret(e));
 })();
